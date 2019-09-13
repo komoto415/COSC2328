@@ -1,0 +1,43 @@
+body {
+  background-image: url("StEdsToppers.png");
+  background-repeat: repeat-y;
+}
+
+h1, h3 {
+  color: blue;
+}
+
+p.t001 {
+  text-align: center;
+  font-size: 30px;
+}
+
+p.t002 {
+text-align: right;
+background-color: green;
+}
+
+table {
+  border: 5px solid pink;
+  margin: 191px;
+}
+
+#td001 {
+  border: 2px dashed purple;
+}
+
+#td002 {
+  border: 2px dotted orange;
+}
+
+#p001 {
+  color: grey;
+}
+
+#p002 {
+  color: red;
+}
+
+#p003 {
+  color: green;
+}

@@ -1,0 +1,15 @@
+body {
+  background-color: default;
+}
+
+h1 {
+  color: blue;
+}
+
+p {
+  color: green;
+}
+
+table {
+  border: 2px dashed black;
+}
