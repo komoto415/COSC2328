@@ -1,26 +1,23 @@
 body {
-  background-image: url("StEdsToppers.png");
-  background-repeat: repeat-y;
-}
+  background-image: url("StEdsToppers.png");background-repeat: repeat-y;
+  }
 
 h1, h3 {
   color: blue;
 }
 
 p.t001 {
-  text-align: center;
-  font-size: 30px;
-}
+  text-align: center;font-size: 30px;
+  }
 
 p.t002 {
-text-align: right;
-background-color: green;
+text-align: right;background-color: green;
 }
 
-table {
+table {margin: 191px;
+
   border: 5px solid pink;
-  margin: 191px;
-}
+  }
 
 #td001 {
   border: 2px dashed purple;
