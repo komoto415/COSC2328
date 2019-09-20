@@ -19,14 +19,13 @@
     $string1 = "Jeffrey"; $string2 = "Bob";
     function compareStringsToFormat($string1, $string2) {
       if (strlen($string1) > strlen($string2)) {
-        aaa
       echo "<p style=\"text-align:right;color:red\">$string1<br>$string2</p>";
       }
       elseif (strlen($string1) < strlen($string2)){
-        "<p style=\"text-align:center;color:blue\">$string1<br>$string2</p>";
+      echo "<p style=\"text-align:center;color:blue\">$string1<br>$string2</p>";
       }
       else {
-        "<p style=\"text-align:left;color:black\">$string1<br>$string2</p>";
+      echo "<p style=\"text-align:left;color:black\">$string1<br>$string2</p>";
       }
     }
     compareStringsToFormat($string1, $string2);
@@ -51,9 +50,9 @@
         echo "<p> $int1 $int2</p>";
       }
     }
-    whichIstheBiggest(x,y,z);
-    whichIstheBiggest(y,z,x);
-    whichIstheBiggest(z,x,y);
+    whichIstheBiggest($x,$y,$z);
+    whichIstheBiggest($y,$z,$x);
+    whichIstheBiggest($z,$x,$y);
 
 
     // Function #3
@@ -79,8 +78,8 @@
       $arrayAverage = 0;
       for ($i = 0; $i < $arraySizel; $i++) {
         $insertMe = rand(0,$integerUpperBound);
-        $my_array[$i] = $insertMe;
-        $arraySum += $insertMe;
+        $funArray[$i] = $insertMe;
+        $arrayAverageDomi += $insertMe;
       }
       $arrayAverage = $arraySum / $arraySize;
       echo "<p style=\"text-alight:center\"> $arrayAverage</p>";
