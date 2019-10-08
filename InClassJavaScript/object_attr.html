@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+  <h2>Object Properties</h2>
+
+  <p id="p1"></p>
+  <p id="p2"></p>
+  <img id="img1" src="https://images-na.ssl-images-amazon.com/images/I/81Pz14q%2B%2BHL._SY355_.jpg" alt="Gaming PC"><br>
+  <a id="link1" href="https://www.stedwards.edu/">The university home page!</a>
+  <script>
+    var txt = "";
+    var text = "";
+    var person = {
+      fname: "Ryan",
+      lname: "Michaels",
+      age: 30,
+      job: "Professor"
+    };
+    var x;
+    for (x in person) {
+      txt += person[x] + " ";
+    }
+    document.getElementById("p1").innerHTML = txt;
+    for (x in document.getElementById("link1")) {
+      text += x + " " + document.getElementById("link1")[x] + "<br>";
+    }
+    document.getElementById("p2").innerHTML = text;
+  </script>
+
+</body>
+
+</html>

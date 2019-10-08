@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>This sample webpage will contain code to extract the value of selected radio buttons and select fields</h2>
+    <form id="form1">
+      Basic Text Input: <input type="text" id="txt1" name="txt1" value="Sample Text Here"><br>
+      Colors:
+      <input type="radio" name="colors" value="red" id="red">Red
+      <input type="radio" name="colors" value="blue" id="blue">Blue
+      <input type="radio" name="colors" value="green" id="green">Green
+      <br>
+      <select id="fruit" size="4">
+        <option>Apple</option>
+        <option>Date</option>
+        <option>Grapefruit</option>
+        <option>Kiwi</option>
+        <option>Pear</option>
+        <option>Pineapple</option>
+        <option>Watermelon</option>
+      </select>
+      Add new fruit! <input type="text" id="txt2" name="txt2" value="Banana">
+    </form>
+
+    <p>These buttons extract data from our form above</p>
+    <button onclick="get_radio()">Get radio values</button>
+    <button onclick="get_radio2()">Get Selected radio Value</button>
+    <button onclick="get_select()">Get Selected Select</button>
+    <button onclick="get_select2()">Get Select Values</button>
+    <button onclick="get_form()">Get Form Values</button>
+    <br>
+    <p>These buttons will change the selected attributes of the form above</p>
+    <button onclick="radio_red()">Select Red!</button>
+    <button onclick="random_radio()">Random radio!</button>
+    <button onclick="select_kiwi()">Select Kiwi!</button>
+    <button onclick="random_select()">Random select!</button>
+    <button onclick="add_select()">Add to select!</button>
+    <p id="p1"></p>
+    <p id="p2"></p>
+    <p id="p3"></p>
+    <p id="p4"></p>
+    <p id="p5"></p>
+
+    <script>
+      // This function will retrieve the value stored in radio buttons by ID
+      function get_radio()
+      {
+        var x = document.getElementById('red');
+        var y = document.getElementById('blue');
+        var z = document.getElementById('green');
+        document.getElementById('p1').innerHTML = "Button 1 value: " + x.value + "<br>Button 2 value: " + y.value + "<br>Button 3 value: " + z.value;
+      }
+
+      // This function will retrieve the value of the currently selected radio button
+      function get_radio2()
+      {
+        var colors = document.getElementsByName('colors');
+        tmp = "no button selected";
+        for(i=0; i<colors.length; i++)
+        {
+          if(colors[i].checked)
+          {
+            tmp = colors[i].value;
+            break;
+          }
+        }
+        document.getElementById('p2').innerHTML = "The currently selected value is: " + tmp;
+      }
+
+      // This function will iterate across a select field and print out its values
+      function get_select()
+      {
+        var x = document.getElementById("fruit");
+        tmp = x.value;
+        if(tmp == "")
+        {
+          tmp = "no value selected";
+        }
+        document.getElementById("p3").innerHTML = "The currently selected item is: " + tmp;
+      }
+
+      // This function will print out the entire contents of the select field
+      function get_select2()
+      {
+        var x = document.getElementById("fruit");
+        tmp = "";
+        for(i = 0; i < x.options.length; i++)
+        {
+          tmp += x[i].value + "<br>";
+        }
+        document.getElementById("p4").innerHTML = tmp;
+      }
+
+      // This function will output the values stored inside the form above
+      function get_form()
+      {
+        var x = document.getElementById("form1").elements;
+        var tmp = "";
+        for(i = 0; i < x.length; i++)
+        {
+          tmp += x[i].value + "<br>";
+        }
+        document.getElementById("p5").innerHTML = "The current contents of the webpage is: <br>" + tmp;
+      }
+
+      // This function will select the red radio button
+      function radio_red()
+      {
+        document.getElementsByName("colors")[0].checked = true;
+      }
+
+      // This function will randomly select a radio button to be selected
+      function random_radio()
+      {
+        var x = document.getElementsByName('colors');
+        y = Math.floor((Math.random() * x.length));
+        x[y].checked = true;
+      }
+
+      // This function will select Kiwi in the fruit select field
+      function select_kiwi()
+      {
+        document.getElementById("fruit").value = "Kiwi";
+      }
+
+      // This function will randomly select a value inside the select field
+      function random_select()
+      {
+        var x = document.getElementById("fruit");
+        y = Math.floor((Math.random() * x.options.length));
+        x.value = x.options[y].value;
+      }
+
+      // This function will add the contents of txt2 to our select field
+      function add_select()
+      {
+        var x = document.getElementById("fruit");
+        var y = document.getElementById("txt2");
+        x.options[x.options.length] = new Option(y.value);
+      }
+    </script>
+  </body>
+</html>

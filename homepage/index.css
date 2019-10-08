@@ -2,7 +2,7 @@ body {
   background-color: default;
 }
 
-h1 {
+h2 {
   color: blue;
 }
 
@@ -10,6 +10,36 @@ p {
   color: green;
 }
 
-table {
-  border: 2px dashed black;
+.aboutMe {
+  margin: 0px 10px 0px 0px;
+  padding: 5px 5px 5px 5px;
+  height: auto;
+  width: 60%;
+  border: 1px solid #ddd;
+  border-radius: 4px 4px 4px 4px;
+  background-color: #f4f4f4;
+  display: inline-block
+}
+
+.classWork {
+    margin: 0px 10px 0px 0px;
+    padding: 5px 5px 5px 5px;
+    height: auto;
+    width: 60%;
+    border: 1px solid #ddd;
+    border-radius: 4px 4px 4px 4px;
+    background-color: #f4f4f4;
+    display: inline-block
+}
+
+.classWorkTbs {
+    /* font-family:verdana; */
+}
+#tb001 {
+    width: 220px;
+    background-color: lightblue;
+}
+#tb002 {
+    width: 220px;
+    background-color: lightgreen;
 }

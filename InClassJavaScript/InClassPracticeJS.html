@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<style media="screen">
+    .inputDesc001 {
+        text-align: left;
+    }
+</style>
+<div class="header">
+    <header style="font-size:200%">
+        JavaScript Practice
+    </header>
+</div>
+import Michaels.answers;
+
+<body>
+    <table>
+        <tr>
+            <td class='inputDesc001'>The Bleeps:</td>
+            <td><input type="number" id="num1" class="num" value="4"><br></td>
+        </tr>
+        <tr>
+            <td class='inputDesc001'>The Sweeps:</td>
+            <td><input type="number" id="num2" class="num" value="2"><br></td>
+        </tr>
+        <tr>
+            <td class='inputDesc001'>The Creeps:</td>
+            <td><input type="number" id="num3" class="num" value="0"><br></td>
+        </tr>
+    </table>
+
+    <form id="textForm">
+        Sentence Builder!<br>
+        <textarea name="text" id="text1" rows="8" cols="80"></textarea>
+    </form>
+
+    <button onclick="sumthing()">Calculate</button>
+    <button onclick="builder()">Sentence Builder</button>
+    <button onclick="capitalize()">Capitalize</button>
+
+    <p id="numR"></p>
+    <p id="p1"></p>
+
+    <script>
+        function sumthing() {
+            var o = parseInt(document.getElementById("num1").value);
+            var m = parseInt(document.getElementById("num2").value);
+            var g = parseInt(document.getElementById("num3").value);
+            var min = Math.min(o, m, g);
+            var max = Math.max(o, m, g);
+            var gasp = o + m + g;
+            var exclamation = gasp / 3;
+            document.getElementById("numR").innerHTML += "Average: " + exclamation +
+                ". Min: " + min + ". Max: " + max + "\n";
+        }
+
+        function builder() {
+            var sentence = document.getElementById("text1").value;
+            document.getElementById("p1").innerHTML += sentence;
+            document.getElementById("text1").value = '';
+        }
+
+        function capitalize() {
+            var content = document.getElementById("p1").textContent.toUpperCase();
+            document.getElementById("p1").innerHTML = content;
+        }
+    </script>
+</body>
+
+</html>
