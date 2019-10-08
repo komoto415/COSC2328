@@ -4,7 +4,11 @@
     <meta charset="utf-8">
     <title>Practice PHP</title>
   </head>
-
+  <div class="header">
+      <header style="font-size:200%">
+          JavaScript Practice
+      </header>
+  </div>
   <body>
     <h1>
       Mah Name is Jeffrey

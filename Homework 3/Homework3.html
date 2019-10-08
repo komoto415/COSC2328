@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Suh</title>
+    <style media="screen">
+        #p1 {
+            color: var(--main-p-colour);
+        }
+
+        #p2 {
+            color: var(--main-p-colour);
+        }
+
+        body {
+            background-color: lightblue;
+        }
+
+        :root {
+            --main-p-colour: yellow;
+        }
+    </style>
+</head>
+<header style="font-size: 200%">
+    Homework 3
+</header>
+
+<body>
+    <form>
+        Username:<br>
+        <input type="text" id="userName" value=""> <br>
+        E-Mail:<br>
+        <input type="text" id="eMail" value=""><br>
+        Number Field 1:<br>
+        <input type="number" id="num1" value="1" min="1" max="100"><br>
+        Number Field 2:<br>
+        <input type="number" id="num2" value="1" min="1" max="100"><br>
+        Choose an Operation:<br>
+        <select class="ops" id="op">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+            <option value="%">%</option>
+        </select><br>
+        Pick a Colour Please!<br>
+        <input type="color" id="colour" value="#ffffff">
+    </form>
+
+    <button onclick="register()" id="button1">Register</button>
+    <button onclick="solve()" id="button2">Solve</button>
+    <button onclick="changeColour()" id="button3">Change Colour</button>
+
+    <p class='element' id="p1"></p>
+    <p id="p2"></p>
+
+    <script>
+        function register() {
+            userName = document.getElementById('userName').value;
+            eMail = document.getElementById('eMail').value;
+            document.getElementById("p1").innerHTML = "Welcome " + userName +
+                ". You are registed to the email " + eMail;
+            if (userName == "") {
+                document.getElementById('p1').innerHTML = "A Username wasn't passed in!";
+            } else if (eMail == "") {
+                document.getElementById('p1').innerHTML = "An E-Mail wasn't passed in!";
+            }
+        }
+
+        function solve() {
+            num1 = parseInt(document.getElementById("num1").value)
+            num2 = parseInt(document.getElementById("num2").value)
+            op = document.getElementById('op').value;
+            var solved;
+            if (op == "+") {
+                solved = num1 + num2;
+            } else if (op == "-") {
+                solved = num1 - num2;
+            } else if (op == "*") {
+                solved = num1 * num2;
+            } else if (op == "/") {
+                solved = num1 / num2;
+            } else {
+                solved = num1 % num2;
+            }
+            document.getElementById('p2').innerHTML = solved;
+        }
+
+        function changeColour() {
+            colour = document.getElementById('colour').value;
+            p1 = document.getElementById('p1');
+            p2 = document.getElementById('p2');
+            p1.style.color = colour;
+            p2.style.color = colour;
+        }
+    </script>
+</body>
+
+</html>
