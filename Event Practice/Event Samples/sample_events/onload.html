@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <body>
+
+    <h3>This page demonstrates onload listeners</h3>
+    <img src="https://media.giphy.com/media/QbumCX9HFFDQA/giphy-downsized-large.gif" onload="loadImage()" width="300" height="300">
+    <br>
+    <button onclick="makenewimage()">Click me!</button><br>
+    <div id="toFill"></div>
+    <script>
+      function loadImage()
+      {
+        alert("Our image is now loaded");
+      }
+
+      function makenewimage()
+      {
+	var img1 = "<img src='https:\/\/i.imgur.com\/GVJ06OK.jpg' onload=\"loadImage()\">";
+	document.getElementById("toFill").innerHTML += img1 + "<br>";
+      }
+    </script>
+
+  </body>
+</html>

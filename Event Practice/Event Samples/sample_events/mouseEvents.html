@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <body>
+
+    <h3>This web page uses the mouse enter and mouse leave events to resize an image, change the color of text, and switch image sources.</h3>
+    <img onmouseenter="bigImg(this)" onmouseleave="normalImg(this)" border="0" src="https://i.imgur.com/GVJ06OK.jpg" alt="HACKERMAN" width="300" height="300">
+
+    <p onmouseenter="enterColor(this)" onmouseleave="exitColor(this)">This paragraph tag will have its text and background <br>color changed when the mouse enters and leaves!</p>
+    <span onmouseenter="enterColor(this)" onmouseleave="exitColor(this)">This span tag<br>will have the same happen to it!</span>
+
+    <h4>Below we demonstrate some danger with mouse listeners!</h4>
+    <img onmouseenter="switchImage(this)" onmouseleave="returnImage(this)" src="https://www.realmofhistory.com/wp-content/uploads/2018/03/10-mythical-dragon-entities-facts_11.jpg">
+
+    <script>
+      function bigImg(x)
+      {
+        x.style.height = "600px";
+        x.style.width = "600px";
+      }
+
+      function normalImg(x)
+      {
+        x.style.height = "300px";
+        x.style.width = "300px";
+      }
+
+      function enterColor(x)
+      {
+        x.style.color = "blue";
+        x.style.backgroundColor = "red";
+      }
+
+      function exitColor(x)
+      {
+        x.style.color = "cyan";
+        x.style.backgroundColor = "lightgreen";
+      }
+
+      function switchImage(x)
+      {
+        x.src = "https://webcdn.triongames.com/archeage/blogs/dragonraising/legends-return-dragons.gif";
+      }
+
+      function returnImage(x)
+      {
+        x.src = "https://www.realmofhistory.com/wp-content/uploads/2018/03/10-mythical-dragon-entities-facts_11.jpg";
+      }
+
+    </script>
+
+  </body>
+</html>

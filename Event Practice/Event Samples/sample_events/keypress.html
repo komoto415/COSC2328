@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <body onkeypress="keyCounter()">
+    <h3>This page demonstrates the usage of key press listeners</h3>
+
+    <p>Press and hold down a key inside the text field to set a blue background color. Release the key to set a grey background color.</p>
+
+    <input type="text" id="txt1" onkeypress="keydownFunction(event)" onkeyup="keyupFunction(this)">
+
+    <div>
+    	<span>The current number of key presses is: </span>
+      <span id="myelement"></span><br>
+      <span id="textVal"></span>
+    </div>
+
+    <script>
+      var count = 0;
+      function keydownFunction(x)
+      {
+        document.getElementById("txt1").style.backgroundColor = "lightblue";
+        whatKey(x);
+      }
+
+      function keyupFunction(x)
+      {
+        x.style.backgroundColor = "lightgrey";
+      }
+
+      function keyCounter()
+      {
+        count+=1;
+      	document.getElementById('myelement').innerHTML = count;
+      }
+
+      function whatKey(x)
+      {
+        var y = x.charCode;
+        var z = String.fromCharCode(y);
+        var res = "The unicode value of the key pressed is: " + y;
+        res += " and the character pressed was: " + z;
+        document.getElementById('textVal').innerHTML = res;
+      }
+    </script>
+
+  </body>
+</html>

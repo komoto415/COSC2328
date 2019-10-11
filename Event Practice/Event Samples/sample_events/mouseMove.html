@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      div
+      {
+        width: 250px;
+        height: 125px;
+        border: 3px dashed blue;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div onmousemove="findCoord(event)" onmouseout="clearCoord()"></div>
+
+    <h4>Mouse over the rectangle above, and get the coordinates of your mouse pointer.</h4>
+
+
+    <span id="myspan"></span>
+
+    <script>
+      function findCoord(e)
+      {
+        var x = e.clientX;
+        var y = e.clientY;
+        var coor = "Coordinates: (" + x + "," + y + ")";
+        document.getElementById("myspan").innerHTML = coor;
+      }
+
+      function clearCoord()
+      {
+        document.getElementById("myspan").innerHTML = "";
+      }
+    </script>
+
+  </body>
+</html>
