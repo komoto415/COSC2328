@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    body
+    {
+      background-color: lightblue;
+    }
+    div
+    {
+      width: 150px;
+      height: 150px;
+      border-style: inset;
+      margin: 10px;
+      float: left;
+      padding: 10px;
+      text-align: center;
+      background-color: lightgray;
+    }
+
+    p
+    {
+      background-color: lightgreen;
+      color: red;
+    }
+    </style>
+  </head>
+  <body>
+
+  <h3>This example demonstrates the difference between onmousemove, onmouseenter and onmouseover. It will count the number of times each one is triggered</h3>
+
+
+  <div onmousemove="myMove(event)">
+    <p>onmousemove: <br> <span id="myspan">Mouse over me!</span></p>
+    <span>I am some extra text! Here are the coordinates of the event: </span><span id="coor1" style="background-color:cyan;color:red;"></span>
+  </div>
+
+  <div onmouseenter="myEnter(event)">
+    <p>onmouseenter: <br> <span id="myspan2">Mouse over me!</span></p>
+    <span>I am some extra text! Here are the coordinates of the event: </span><span id="coor2"  style="background-color:cyan;color:red;"></span>
+  </div>
+
+  <div onmouseover="myOver(event)">
+    <p>onmouseover: <br> <span id="myspan3">Mouse over me!</span></p>
+    <span>I am some extra text! Here are the coordinates of the event: </span><span id="coor3"  style="background-color:cyan;color:red;"></span>
+  </div>
+
+  <script>
+    var x = 0;
+    var y = 0;
+    var z = 0;
+
+    function myMove(e)
+    {
+      document.getElementById("myspan").innerHTML = ++x;
+      var a = e.clientX;
+      var b = e.clientY;
+      var coor = "Coordinates: (" + a + "," + b + ")";
+      document.getElementById("coor1").innerHTML = coor;
+    }
+
+    function myEnter(e)
+    {
+      document.getElementById("myspan2").innerHTML = ++y;
+      var a = e.clientX;
+      var b = e.clientY;
+      var coor = "Coordinates: (" + a + "," + b + ")";
+      document.getElementById("coor2").innerHTML = coor;
+    }
+
+    function myOver(e)
+    {
+      document.getElementById("myspan3").innerHTML = ++z;
+      var a = e.clientX;
+      var b = e.clientY;
+      var coor = "Coordinates: (" + a + "," + b + ")";
+      document.getElementById("coor3").innerHTML = coor;
+    }
+  </script>
+
+  </body>
+</html>

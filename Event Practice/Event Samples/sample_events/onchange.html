@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <body>
+
+  <h3>This example demonstrates how to assign an "onchange" and "oninput" event to an input element. We will demonstrate also the instances where it will not change</h3>
+
+  Enter your name: <input type="text" id="fname" onchange="inputChange()" oninput="inputGiven()">
+
+  <h5>Below here we will output the input changed and the current input</h5>
+  <span id="myspan"></span><br>
+  <span id="myspan2"></span>
+
+  <script>
+    function inputChange()
+    {
+      var x = document.getElementById("fname");
+      x.value = x.value.toUpperCase();
+      alert("The text has been switched to upper case!");
+      document.getElementById('myspan').innerHTML = x.value;
+    }
+
+    function inputGiven()
+    {
+      var x = document.getElementById("fname").value;
+      document.getElementById("myspan2").innerHTML = "You wrote: " + x;
+    }
+  </script>
+
+  </body>
+</html>
