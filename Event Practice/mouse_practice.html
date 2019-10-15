@@ -1,81 +1,81 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <style>
-      .column
-      {
-        float: left;
-        width: 33%;
-      }
+        .column {
+            float: left;
+            width: 33%;
+        }
 
-      body
-      {
-        background-color: lightgreen;
-        font-size: 12px;
-      }
+        body {
+            background-color: lightgreen;
+            font-size: 12px;
+        }
 
-      #myform
-      {
-        border-style: inset;
-        max-width: 400px;
-      }
+        #myform {
+            border-style: inset;
+            max-width: 400px;
+        }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <h3>On this webpage we will practice utilizing mouse events</h3>
     <form onmouseleave="tryThis()" id="myform">
-      This field should change color as we enter and leave: <input type="text" id="txt1" onmouseover="enterNewBackground(this)" onmouseleave="leaveNewBackground(this)" value="Some sample text"><br>
-      X-Coord: <input type="number" id="num1"><br>
-      Y-Coord: <input type="number" id="num2">
+        This field should change color as we enter and leave: <input type="text" id="txt1" onmouseover="enterNewBackground(this)" onmouseleave="leaveNewBackground(this)" value="Some sample text"><br>
+        X-Coord: <input type="number" id="num1"><br>
+        Y-Coord: <input type="number" id="num2">
     </form>
     <div class="column">
-      <img onmouseenter="changeImgSrc(this)" onmouseleave="ogImgSrc(this)" id="img1" width="400px" height="400px" src="https://webcdn.triongames.com/archeage/blogs/dragonraising/legends-return-dragons.gif"><br>
-      <img onmouseover="bigifyImg(this)" id="img2" width="400px" height="400px" src="https://www.realmofhistory.com/wp-content/uploads/2018/03/10-mythical-dragon-entities-facts_11.jpg">
+        <img onmouseenter="changeImgSrc()" id="img1" width="400px" height="400px" src="https://webcdn.triongames.com/archeage/blogs/dragonraising/legends-return-dragons.gif"><br>
+        <img onmouseover="bigifyImg(this)" id="img2" width="400px" height="400px" src="https://www.realmofhistory.com/wp-content/uploads/2018/03/10-mythical-dragon-entities-facts_11.jpg">
     </div>
     <div class="column">
-      <img onmousemove="getCordinates(event)" id="graph" src="https://graphsketch.com/images/blank.png">
+        <img onmousemove="getCordinates(event)" id="graph" src="https://graphsketch.com/images/blank.png">
     </div>
 
     <script>
-    function ogImgSrc(x) {
-        x.src = "https://webcdn.triongames.com/archeage/blogs/dragonraising/legends-return-dragons.gif";
-    }
-    
-    function changeImgSrc(x) {
-        x.src = "https://www.realmofhistory.com/wp-content/uploads/2018/03/10-mythical-dragon-entities-facts_11.jpg";
-    }
+        function changeImgSrc() {
+            var x = document.getElementById('img1');
+            var y = document.getElementById('img2');
+            var z = x.src;
+            x.src = y.src;
+            y.src = z;
+        }
 
-    function bigifyImg(x) {
-        x.style.height = "200%";
-        x.style.width = "200%";
-    }
+        function bigifyImg(x) {
+            x.height *= 1.5;
+            x.width *= 1.5;
+        }
 
-    function enterNewBackground(x) {
-        x.style.backgroundColor = "lightblue";
-    }
+        function enterNewBackground(x) {
+            x.style.backgroundColor = "lightblue";
+        }
 
-    function leaveNewBackground(x) {
-        x.style.backgroundColor = "orange";
-    }
+        function leaveNewBackground(x) {
+            x.style.backgroundColor = "orange";
+        }
 
-    function getCordinates(e) {
-        var x = e.clientX;
-        var y = e.clientY;
-        document.getElementById("num1").value = x;
-        document.getElementById("num2").value = y;
-    }
+        function getCordinates(e) {
+            var x = e.clientX;
+            var y = e.clientY;
+            document.getElementById("num1").value = x;
+            document.getElementById("num2").value = y;
+        }
 
-    function tryThis() {
-        // smolify();
-        document.getElementById("img2").style.height = "400px";
-        document.getElementById("img2").style.width = "400px";
-        var x = document.getElementById("num1").value;
-        var y = document.getElementById("num2").value;
-        var z = document.getElementById("txt1").value;
-        alert("Test field content: " + z + "\n" +
-            "x: " + x + "\n" +
-            "y: " + y);
-    }
+        function tryThis() {
+            // smolify();
+            document.getElementById("img2").style.height = "400px";
+            document.getElementById("img2").style.width = "400px";
+            var x = document.getElementById("num1").value;
+            var y = document.getElementById("num2").value;
+            var z = document.getElementById("txt1").value;
+            alert("Test field content: " + z + "\n" +
+                "x: " + x + "\n" +
+                "y: " + y);
+        }
     </script>
-  </body>
+</body>
+
 </html>
