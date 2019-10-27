@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>We will search through a string here!</p>
+    <script>
+      var str = "There have been a wave of brave adventures searching through the graveyard for a band of gnaves";
+      var my_regex = /ave/g;
+
+      while (my_regex.test(str)==true)
+        {
+        document.write("An instance of '" + my_regex.source + "' has been found. Index now at: "+my_regex.lastIndex);
+        document.write("<br>");
+        }
+    </script>
+    <p><br>The string has been analyzed!</p>
+    <button onclick="donotuse()">Bad idea here!</button>
+    <script>
+      function donotuse()
+      {
+        document.write("Why would you do this!?!?!?!?!");
+      }
+    </script>
+  </body>
+</html>

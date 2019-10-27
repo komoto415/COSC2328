@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			body
+			{
+				background-color : lightblue;
+			}
+		</style>
+	</head>
+	<body>
+
+		<h3>Will will display the power of defining functions in javascript replace below</h3>
+		<p>We will display capitalizationand substitution of text from an input field</p>
+
+		<p id="p1">Mr Blue has a blue house and a blue car.</p>
+		<p id="p2">Mr Blue has a blue house and a red car parked inside his blue house.</p>
+		<input type="text" id="txt1" value="Hello there!"><br>
+		<input type="text" id="txt2" value="General Kenobi"><br>
+
+		<button onclick="caps()">Uppercase</button>
+		<button onclick="inputReplace()">Input Replace</button>
+
+		<script>
+			function caps()
+			{
+				var str = document.getElementById("p1").innerHTML;
+				var res = str.replace(/blue|house|car/gi, function (x)
+				{
+					return x.toUpperCase();
+				});
+				document.getElementById("p1").innerHTML = res;
+			}
+
+			function inputReplace()
+			{
+				var str = document.getElementById("p2").innerHTML;
+				var temp = str.replace(/blue/gi, function (x)
+				{
+					return document.getElementById("txt1").value;
+				});
+				var res = temp.replace(/house/g, function (x)
+				{
+					return document.getElementById("txt2").value;
+				});
+				document.getElementById("p2").innerHTML = res;
+			}
+		</script>
+
+	</body>
+</html>

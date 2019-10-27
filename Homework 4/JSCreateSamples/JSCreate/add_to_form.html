@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			form
+			{
+				border-style: inset;
+			}
+			body
+			{
+				background-color: lightblue;
+			}
+		</style>
+	</head>
+	<body>
+		<form id="myform">
+			This form is initially empty, but we will put inside it new input fields!<br>
+			<input type="text" id="txt1"><br>
+		</form>
+		<br>
+		<button onclick="addfield()">Add a field to the above!</button>
+		<button onclick="">Add radio buttons!</button>
+		<button onclick="">Create new heading!</button>
+		<button onclick="">Remake form!</button>
+		
+		<script>
+			// This function will add a new text input field to the above
+			count = 0;
+			function addfield()
+			{
+				count++;
+				var mytext = document.createElement("input");
+				var mybreak = document.createElement("br");
+				mytext.setAttribute("type", "text");
+				mytext.setAttribute("value", "text field: " + count);
+				document.getElementById('myform').appendChild(mytext);
+				document.getElementById('myform').appendChild(mybreak);
+			}
+		</script>
+		
+	</body>
+</html>

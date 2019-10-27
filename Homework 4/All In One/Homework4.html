@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mah Name Is</title>
+</head>
+
+<header style="font-size: 200%">
+    Homework 4
+</header>
+
+<body>
+    <div>
+        <div>
+            <h3>Enter card here: </h3>
+            <input type="text" onchange="addImgTag(this)" size="25" id="card"><br>
+            <button onclick="keepAces()" class="submit" size="25">Keep Aces</button>
+        </div>
+        <div>
+            <h3>Back of card: </h3>
+            <img onmouseover="displayNumCards()" class="backImgStyle" src="./Deck/Green_back.jpg" alt="Back of card" width="150px"></img>
+        </div>
+    </div>
+
+    <h2>Your card deck:</h2>
+    <div id="cardDeck"></div>
+
+    <script>
+        const validCardRegEx = new RegExp(/(^[2-9][CDHS]$)|(^1[0-4][CDHS]$)/);
+        const isAce = new RegExp(/(14)/);
+        const fileAttachment = ".jpg";
+        const filePath = "Deck/";
+        var numberOfCards = 0;
+        var deletedCards = 0;
+
+        function addImgTag(imgName) {
+            var file = imgName.value;
+            var check = file.match(validCardRegEx);
+            if (check) {
+                var newCard = document.createElement("img");
+                newCard.src = filePath + file + fileAttachment;
+                document.getElementById('cardDeck').appendChild(newCard);
+                newCard.width = "150";
+                numberOfCards++;
+            } else {
+                alert("Invalid input!")
+            }
+        }
+
+        function displayNumCards() {
+            alert("You have " + numberOfCards + " card in your deck");
+        }
+        //
+        function keepAces() {
+            var cardDeckDiv = document.getElementById('cardDeck')
+            var c = cardDeckDiv.children;
+            for (var i = 0; i < c.length; i++) {
+                var imgSrc = c[i].src;
+                var isNotAce = !imgSrc.includes("14")
+                if (isNotAce) {
+                    cardDeckDiv.removeChild(c[i]);
+                    deletedCards++;
+                    numberOfCards--;
+                }
+            }
+            alert("You have removed " + deletedCards + " cards in this session")
+        }
+    </script>
+
+</body>
+
+</html>

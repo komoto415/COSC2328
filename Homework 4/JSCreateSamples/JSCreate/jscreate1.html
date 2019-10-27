@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<style>
+      	p
+          {
+          	color:blue;
+          }
+      </style>
+  </head>
+  <body>
+
+    <p>Click the button to make a BUTTON element with text.</p>
+
+    <button onclick="myFunction()">Try it</button>
+
+    <script>
+      function myFunction()
+      {
+        var btn = document.createElement("BUTTON");
+        btn.textContent = "Look we've made a button!";
+        document.body.appendChild(btn);
+
+        var para1 = document.createElement("p");
+        para1.innerHTML = "Hey it is a paragraph tag!<br>Look we put a break in!";
+        document.body.prepend(para1);
+
+
+        var img1 = document.createElement("img");
+        img1.src = "https://media.giphy.com/media/QbumCX9HFFDQA/giphy-downsized-large.gif";
+        document.body.append(img1);
+      }
+    </script>
+
+  </body>
+</html>

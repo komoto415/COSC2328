@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<style>
+		body {
+			background-color: lightblue;
+		}
+	</style>
+</head>
+
+<body>
+
+	<p>We will perform several searches of the string is inside the string: "Is this all there is or is the definition of is different?" upon button click</p>
+
+	<button onclick="findIs()">Get a count of is</button>
+	<button onclick="findIs2()">Get the first is case insensitive</button>
+	<button onclick="findIs3()">Get a count of is, case insensitive</button>
+
+	<p id="p1"></p>
+	<p id="p2"></p>
+	<p id="p3"></p>
+
+	<script>
+		var str = "Is this all there is or is the definition of is different?";
+
+		function findIs() {
+			var patt1 = /is/g;
+			var result = str.match(patt1);
+			document.getElementById("p1").innerHTML = "The results of a global search of is are: " + result;
+		}
+
+		function findIs2() {
+			var patt2 = /is/i;
+			var result = str.match(patt2);
+			document.getElementById("p2").innerHTML = "The result of a case insensitive search for is are: " + result;
+		}
+
+		function findIs3() {
+			var patt3 = /is/gi;
+			var result = str.match(patt3);
+			document.getElementById("p3").innerHTML = "The result of a global and case insensitive search for is are: " + result;
+		}
+	</script>
+
+</body>
+
+</html>

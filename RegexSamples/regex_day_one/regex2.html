@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			body
+			{
+				background-color : lightblue;
+			}
+		</style>
+	</head>
+	<body>
+
+	<p>Here we will do several searches of the binary number: 001101010101010111111</p>
+
+		<button onclick="binary1()">/[01]+11/g</button>
+		<button onclick="binary2()">/[01]+?11/g</button>
+		<button onclick="binary3()">/[01]+?11\b/g</button>
+		<button onclick="binary4()">/\b[01]+?11/g</button>
+
+		<p id="p1"></p>
+		<p id="p2"></p>
+		<p id="p3"></p>
+		<p id="p4"></p>
+		<br><br>
+		<p id="p5"></p>
+
+		<script>
+			var str = "001101010101010111111";
+			function binary1()
+			{
+				var patt1 = /[01]+11/g;
+				var result = str.match(patt1);
+				document.getElementById("p1").innerHTML = result;
+				for (x in result)
+				{
+					document.getElementById('p5').innerHTML += result[x] + "<br>";
+				}
+			}
+
+			function binary2()
+			{
+				var patt2 = /[01]*?11/g;
+				var result = str.match(patt2);
+				document.getElementById("p2").innerHTML = result;
+				for (x in result)
+				{
+					document.getElementById('p5').innerHTML += result[x] + "<br>";
+				}
+			}
+
+			function binary3()
+			{
+				var patt3 = /[01]+?11\b/g;
+				var result = str.match(patt3);
+				document.getElementById("p3").innerHTML = result;
+				for (x in result)
+				{
+					document.getElementById('p5').innerHTML += result[x] + "<br>";
+				}
+			}
+
+			function binary4()
+			{
+				var patt4 = /\b[01]+?11/g;
+				var result = str.match(patt4);
+				document.getElementById("p4").innerHTML = result;
+				for (x in result)
+				{
+					document.getElementById('p5').innerHTML += result[x] + "<br>";
+				}
+			}
+		</script>
+
+	</body>
+</html>

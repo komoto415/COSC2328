@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			form
+			{
+				border-style: inset;
+			}
+			body
+			{
+				background-color: lightblue;
+			}
+		</style>
+	</head>
+	<body>
+		<form id="myform">
+			This form is initially empty, but we will put inside it new input fields!<br>
+			The starting field in this form will be used by the other button to retrieve value from a generated text field.<br>
+			Input text id: <input type="text" id="mytext"><br>
+		</form>
+		<br>
+		<button onclick="addfield()">Add a field to the above!</button><br>
+		<button onclick="getvalue()">Get the value from a text field!!</button><br><br>
+		<p id="p1"></p>
+		
+		<script>
+			// This function will add a new text input field to the above
+			count = 0;
+			function addfield()
+			{
+				count++;
+				var mytext = document.createElement("input");
+				var mybreak = document.createElement("br");
+				mytext.setAttribute("type", "text");
+				mytext.setAttribute("value", "text field: " + count);
+				mytext.setAttribute("id", "text" + count);
+				document.getElementById('myform').appendChild(mytext);
+				document.getElementById('myform').appendChild(mybreak);
+			}
+			
+			// This function extracts the value out of a specified text field
+			// If we were robust, would include a check to make sure the text field we selected actually exists
+			function getvalue()
+			{
+				x = document.getElementById('mytext').value;
+				y = document.getElementById(x).value;
+				document.getElementById('p1').innerHTML = "The value input into the chosen text field is: " + y;
+				document.getElementById(x).value = "We extracted this value!";
+			}
+		</script>
+		
+	</body>
+</html>

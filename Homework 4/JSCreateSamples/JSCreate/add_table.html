@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			table, tr, td
+			{
+				border: 4px solid black;
+				border-collapse: collapse;
+				color: blue;
+				background-color: red;
+			}
+			body
+			{
+				background-color: lightblue;
+			}
+		</style>
+	</head>
+	<body>
+		<button onclick="addtable()">Add a table below!</button><br><br>
+		
+		<script>
+			// This function will add a new text input field to the above
+			function addtable()
+			{
+			    // First we will create the table itself (and a break tag in case we need it)
+				var mytable = document.createElement("table");
+				var mybreak = document.createElement("br");
+				// To prevent the code from getting made at declaring a var over and over again, we define them outside of the loop
+				var myrow;
+				var mydata;
+				// Place the table onto the webpage
+				document.body.appendChild(mytable);
+				for(i = 0; i < 5; i++)
+				{
+				    // Create the row object and then place it into the webpage
+					myrow = document.createElement("tr");
+					mytable.appendChild(myrow);
+					for(j = 0; j < 5; j++)
+					{
+					    // Create the table data object, give it some text, and then place it into the row object defined above
+						mydata = document.createElement("td");
+						mydata.innerHTML = "Row: " + i + " Column: " + j;
+						myrow.appendChild(mydata);
+					}
+				}
+				
+				document.body.appendChild(mybreak);
+			}
+		</script>
+		
+	</body>
+</html>

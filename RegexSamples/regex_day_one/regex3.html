@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			body
+			{
+				background-color : lightblue;
+			}
+		</style>
+	</head>
+	<body>
+
+		<p>Below are several instances of the same paragraph. We will replace blue with red in a variety of ways</p>
+
+		<p id="p1">Mr Blue has a blue house and a blue car.</p>
+		<p id="p2">Mr Blue has a blue house and a blue car.</p>
+		<p id="p3">Mr Blue has a blue house and a blue car.</p>
+		<p id="p4">Mr Blue has a blue house and a blue car.</p>
+
+		<button onclick="replace1()">Replace method one</button>
+		<button onclick="replace2()">Replace blue</button>
+		<button onclick="replace3()">Case insensitive replace</button>
+		<button onclick="replace4()">Global replace</button>
+
+		<script>
+			function replace1()
+			{
+				var str = document.getElementById("p1").innerHTML;
+				str.replace(/blue/, "red");
+				document.getElementById("p1").innerHTML = str;
+			}
+
+			function replace2()
+			{
+				var str = document.getElementById("p2").innerHTML;
+				var res = str.replace(/blue/, "red");
+				document.getElementById("p2").innerHTML = res;
+			}
+
+			function replace3()
+			{
+				var str = document.getElementById("p3").innerHTML;
+				var res = str.replace(/blue/i, "red");
+				document.getElementById("p3").innerHTML = res;
+			}
+
+			function replace4()
+			{
+				var str = document.getElementById("p4").innerHTML;
+				var res = str.replace(/blue/ig, "red");
+				document.getElementById("p4").innerHTML = res;
+			}
+
+	</script>
+
+	</body>
+</html>

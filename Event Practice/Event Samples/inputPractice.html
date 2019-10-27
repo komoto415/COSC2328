@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    body
+    {
+      background-color: lightgrey;
+    }
+
+    #myform
+    {
+      border-style: inset;
+      max-width: 400px;
+    }
+    </style>
+  </head>
+  <body onkeydown="keyCount(this)">
+    <h3>This practice will use key and input events!</h3>
+    <form id="myform">
+      <input type="text" id='txt1' onkeypress="trackCharacter(event)" onkeyup="keyReleased(this)">We will track keypresses in this field!<br>
+      <input type="text" id='txt2' onchange="inputChange(this)">We will track input changes in this field<br>
+      <input type="radio" name="color" oninput="inputGiven(this)" value="red"><span style="color:red">Red</span><br>
+      <input type="radio" name="color" oninput="inputGiven(this)" value="blue"><span style="color:blue">Blue</span><br>
+      <input type="radio" name="color" oninput="inputGiven(this)" value="yellow"><span style="color:yellow">Yellow</span><br>
+      <input type="radio" name="color" oninput="inputGiven(this)" value="green"><span style="color:green">Green</span><br>
+    </form>
+    <p id="p1"></p>
+    <h4 id="heading2"></h4>
+    <span id="myspan"></span><br>
+    <span id="myspan2"></span>
+    <script>
+      var count = 0;
+
+      // This will output the last entered character inside txt1 to p1
+      function trackCharacter(e)
+      {
+          var a = e.charCode;
+          var b = String.fromCharCode(a);
+          document.getElementById('p1').innerHTML = "Your last key pressed was: " + b;
+      }
+
+      // When a key is released inside txt1, we will change the text to capital.
+      function keyReleased(x)
+      {
+         var x = document.getElementById('txt1');
+         x.value = x.value.toUpperCase();
+         // document.getElementById('p1').innerHTML = content;
+      }
+
+      // This function will take the text entered into txt2 and output it to myspan
+      // if it has been changed. We will also perform a regex check to see if three
+      // a's are inside the input. If so, we change the color of myspan's text to red
+      // Otherwise we change the text to blue.
+      function inputChange(x)
+      {
+          var span1 = document.getElementById('myspan');
+          if(isNaN(x.value)) {
+              span1.style.color = "red";
+          } else {
+              span1.style.color = "blue";
+          }
+          span1.innerHTML = x.value;
+      }
+
+      // This will take input from the radio button field and output it to myspan2
+      // It will also change the color of myspan2
+      function inputGiven(x)
+      {
+          var span2 = document.getElementById('myspan2');
+          span2.innerHTML = "You selected: " + x.value;
+          span2.style.backgroundColor = x.value;
+      }
+
+      // This function will count all the key presses that occur on our webpage body
+      // Once the number of keypresses is over 100, it will change the background color
+      function keyCount(x)
+      {
+          count+=1;
+          document.getElementById('heading2').innerHTML = "Number of character key presses: " + count;
+          if (count > 50) {
+              x.style.backgroundColor = "lightsteelblue";
+          }
+      }
+    </script>
+  </body>
+</html>
