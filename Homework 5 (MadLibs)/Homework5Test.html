@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <title>MadLibs</title>
+    <link rel="stylesheet" href="Homework5.css">
+    <style>
+        body {
+            background-color: lightsteelblue;
+        }
+    </style>
+</head>
+<header style="font-size: 200%">
+    Homework 5
+</header>
+
+<body>
+    <div class="buttons">
+        <h3> Pick a Story!</h3>
+        <form id="pickStoryForm">
+            <select id="storiesSelect">
+                <option value="story1">Story 1</option>
+                <option value="story2">Story 2</option>
+                <option value="story3">Story 3</option>
+            </select>
+        </form>
+        <br>
+        <button onclick="generateMadLib()" id="button1">Generate Template Madlib!</button>
+        <br>
+    </div>
+    <h3 id="h3001"></h3>
+    <div id="inputFields">
+        <p id="p001"></p>
+        <h3 id="h3002"></h3>
+        <table>
+            <tr>
+                <td id="td001"></td>
+                <td id="td002"></td>
+            </tr>
+            <tr>
+                <td id="td003"></td>
+                <td id="td004"></td>
+            </tr>
+            <tr>
+                <td id="td005"></td>
+                <td id="td006"></td>
+            </tr>
+            <tr>
+                <td id="td007"></td>
+                <td id="td008"></td>
+            </tr>
+            <tr>
+                <td id="td009"></td>
+                <td id="td010"></td>
+            </tr>
+            <tr>
+                <td id="td011"></td>
+                <td id="td012"></td>
+            </tr>
+            <tr>
+                <td id="td013"></td>
+                <td id="td014"></td>
+            </tr>
+            <tr>
+                <td id="td015"></td>
+                <td id="td016"></td>
+            </tr>
+            <tr>
+                <td id="td017"></td>
+                <td id="td018"></td>
+            </tr>
+            <tr>
+                <td id="addButton"></td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var state = 0;
+        const isVowel = new RegExp(/^[aeiou]$/i)
+
+        function generateMadLib() {
+            var pickStory = document.getElementById("storiesSelect").value;
+            var inputDiv = document.getElementById("inputFields");
+            var storyP = document.getElementById("p001");
+
+            if (state == 0) {
+                state = 1;
+
+                var letsMake = document.getElementById("h3001");
+                var text = document.createTextNode("Lets make MadLibs");
+                letsMake.appendChild(text);
+
+                var letsPlay = document.getElementById("h3002");
+                text = document.createTextNode("Here are the words you need to fill in");
+                letsPlay.appendChild(text);
+
+
+                var addWordButton = document.createElement("INPUT");
+                addWordButton.setAttribute("id", "addWordButton");
+                addWordButton.setAttribute("type", "button");
+                addWordButton.setAttribute("value", "Add Words!");
+                addWordButton.setAttribute("onclick", "generateMadLib()");
+                // addWordButton.style.width = "200px";
+                // addWordButton.style.height = "75px";
+                // addWordButton.style.background = "green";
+                // addWordButton.style.color = "pink";
+                // addWordButton.style.fontSize = "200%";
+
+                var pn1 = document.createElement("INPUT");
+                pn1.setAttribute("id", "pn1");
+                pn1.setAttribute("type", "text");
+
+                var pn2 = document.createElement("INPUT");
+                pn2.setAttribute("id", "pn2");
+                pn2.setAttribute("type", "text");
+
+                var c1 = document.createElement("INPUT");
+                c1.setAttribute("id", "c1");
+                c1.setAttribute("type", "text");
+
+                var adj1 = document.createElement("INPUT");
+                adj1.setAttribute("id", "adj1");
+                adj1.setAttribute("type", "text");
+
+                var adj2 = document.createElement("INPUT");
+                adj2.setAttribute("id", "adj2");
+                adj2.setAttribute("type", "text");
+
+                var ani1 = document.createElement("INPUT");
+                ani1.setAttribute("id", "ani1");
+                ani1.setAttribute("type", "text");
+
+                var v1 = document.createElement("INPUT");
+                v1.setAttribute("id", "v1");
+                v1.setAttribute("type", "text");
+
+                var d1 = document.createElement("INPUT");
+                d1.setAttribute("id", "d1");
+                d1.setAttribute("type", "text");
+
+                var t1 = document.createElement("SELECT");
+                t1.setAttribute("id", "t1");
+                t1.setAttribute("size", 3);
+                var option = document.createElement("option");
+                option.text = "morning";
+                t1.add(option);
+                var option1 = document.createElement("option");
+                option1.text = "afternoon";
+                t1.add(option1);
+                var option2 = document.createElement("option");
+                option2.text = "evening";
+                t1.add(option2);
+
+                addButton.appendChild(addWordButton);
+                td001.append("Pick a pronoun(1):");
+                td002.appendChild(pn1);
+                td003.append("Pick a pronoun(2):");
+                td004.appendChild(pn2);
+                td005.append("Pick an adjective(3):");
+                td006.appendChild(adj1);
+                td007.append("Pick an adjective(4):");
+                td008.appendChild(adj2);
+                td009.append("Pick a colour(5):");
+                td010.appendChild(c1);
+                td011.append("Pick an animial(6):");
+                td012.appendChild(ani1);
+                td013.append("Pick a verb(7):");
+                td014.appendChild(v1);
+                td015.append("Pick a day(8):");
+                td016.appendChild(d1);
+                td017.append("Pick one(9):")
+                td018.appendChild(t1);
+            }
+            var pn1V = document.getElementById("pn1").value == "" ? "(1)" : titleCase(document.getElementById("pn1").value);
+            var pn2V = document.getElementById("pn2").value == "" ? "(2)" : titleCase(document.getElementById("pn2").value);
+            var adj1V = document.getElementById("adj1").value == "" ? "(3)" : document.getElementById("adj1").value.toLowerCase();
+            var adj2V = document.getElementById("adj2").value == "" ? "(4)" : document.getElementById("adj2").value.toLowerCase();
+            var c1V = document.getElementById("c1").value == "" ? "(5)" : document.getElementById("c1").value.toLowerCase();
+            var ani1V = document.getElementById("ani1").value == "" ? "(6)" : document.getElementById("ani1").value.toLowerCase();
+            var v1V = document.getElementById("v1").value == "" ? "(7)" : document.getElementById("v1").value.toLowerCase();
+            if (!isDayOfWeek(document.getElementById("d1").value) && document.getElementById("d1").value != "") {
+                alert(document.getElementById("d1").value + " is not a valid day of the week!")
+            }
+            var d1V = document.getElementById("d1").value == "" || !isDayOfWeek(document.getElementById("d1").value) ? "(8)" : titleCaseWord(document.getElementById("d1").value);
+            var t1V = document.getElementById("t1").value == "" ? "(9)" : document.getElementById("t1").value;
+
+            if (pickStory == "story1") {
+                storyP.innerHTML = `Hello! My name is ${pn1V}. I have a best friend whose name is ${pn2V}.
+                My favourite colour${(c1V.split(' ').length > 1) ? "s" : ""}
+                ${(c1V.split(' ').length > 1) ? "are" : "is"} ${c1V}.
+                Anyone who disagrees is ${adj1V} and shall be punished for their transgressions.
+                Funny enough, ${pn1V} has a pet ${ani1V} named ${pn1V}. It's ${adj2V[0].match(isVowel) ? "an" : "a"} ${adj2V} ${ani1V}.
+                Don't tell his mother, but I heard ${pn2V} ${v1V}${v1V[v1V.length-1].match('e') ? "d" : "ed"}
+                someone during last ${d1V} ${t1V}'s baseball game. Crazy right?!`;
+            } else if (pickStory == "story2") {
+                storyP.innerHTML = `Water. Earth. Fire. Air. Long ago, the ${adj1V} nations lived together in harmony.
+                Then, everything changed when the ${titleCaseWord(c1V)} Nation attacked.
+                Only the Avatar, master of all four ${ani1V}s, could stop them, but when the world needed him most, he vanished.
+                A hundred ${d1V} ${t1V}s passed and my brother ${pn1V} and I discovered the new Avatar, an airbender named ${pn2V}.
+                And although his airbending skills are ${adj2V}, he has a lot to learn before he's ready to save anyone.
+                But I believe ${pn2V} can ${v1V} the world.`;
+            } else {
+                storyP.innerHTML = `${titleCaseWord(c1V)} is he who, in the name of ${d1V} and good will,
+                ${v1V}s the weak through the valley of ${ani1V}s, for he is truly his brother's keeper and the finder of lost ${t1V}s.
+                And I will strike down upon ${pn1V} with ${adj1V} vengeance and ${adj2V} anger those who attempt to poison and destroy my ${pn2V}`;
+            }
+        }
+
+        function titleCaseWord(str) {
+            str = str.toLowerCase();
+            str = str.charAt(0).toUpperCase() + str.slice(1);
+            return str;
+        }
+
+        function titleCase(str) {
+            str = str.toLowerCase().split(' ');
+            for (var i = 0; i < str.length; i++) {
+                str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+            }
+            return str.join(' ');
+        }
+
+        const daysOfTheWeek = ["Monday", "Teusday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+        function isDayOfWeek(str) {
+            str = titleCase(str);
+            return daysOfTheWeek.includes(str);
+        }
+    </script>
+</body>
+
+</html>
