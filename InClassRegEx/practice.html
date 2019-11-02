@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: lightblue;
+        }
+
+        .result {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>In this practice we will be implementing a variety of input checkers!</h3>
+    <p>The method headers and descriptions of what they should do are provided</p>
+    <input type="text" id="mydata"><br>
+    <button onclick="find_num()">Check num!</button>
+    <button onclick="find_whitespace()">Check whitespace!</button>
+    <button onclick="replace_r()">Replace r!</button>
+    <button onclick="count_r()">Count r!</button>
+    <button onclick="replace_fox()">Replace fox!</button>
+    <button onclick="pass_verify()">Password verify!</button>
+    <p class="result" id="p1"></p>
+    <p class="result" id="p2"></p>
+    <p class="result" id="p3"></p>
+    <p class="result" id="p4"></p>
+    <p class="result" id="p5"></p>
+    <p class="result" id="p6"></p>
+
+    <script>
+        const containsDigit = new RegExp(/.*\d.*/);
+        const containsWS = new RegExp(/.*\s.*/);
+        const containsLCr = new RegExp(/r/g);
+        const containsFox = new RegExp(/fox/gi);
+        const containsLC = new RegExp(/[a-z]/);
+        const containsUC = new RegExp(/[A-Z]/);
+        // For this we aren't concerned with the total count of digits, only if there is at least one digit inside the String
+        function find_num() {
+            var textFieldData = document.getElementById('mydata').value;
+            var check = textFieldData.match(containsDigit);
+            if (check) {
+                document.getElementById('p1').innerHTML = "Contains a digit? True";
+            } else {
+                document.getElementById('p1').innerHTML = "Contains a digit? False";
+            }
+
+        }
+
+        // Reminder that whitespace means more than just a single space character, we want to count up instances of tabs and newlines as well
+        function find_whitespace() {
+            var textFieldData = document.getElementById('mydata').value;
+            var check = textFieldData.match(containsWS);
+            if (check) {
+                document.getElementById('p2').innerHTML = "Contains a whitespace? True";
+            } else {
+                document.getElementById('p2').innerHTML = "Contains a whitespace? False";
+            }
+        }
+
+        // You'll need to use the string.replace(regex, replacement) method here.
+        // Reminder that your regex needs to contain the global modifier if you want to do a replace all in a single call
+        function replace_r() {
+            var textFieldData = document.getElementById('mydata').value;
+            var check = textFieldData.match(containsLCr);
+            if (check) {
+                var replacement = textFieldData.replace(containsLCr, "R");
+                document.getElementById('p3').innerHTML = `${textFieldData} has been replaced with: ${replacement}`;
+            } else {
+                document.getElementById('p3').innerHTML = `${textFieldData} has no lowercase 'r'. Nothing has changed`;
+            }
+        }
+
+        // Here we'll want to use the loop structure present in examples regexp2-4
+        // while(reg.test(string)){...}
+        // Maintain a counter as we iterate through that loop
+        function count_r() {
+            var count_r = 0;
+            var textFieldData = document.getElementById('mydata').value;
+            while (containsLCr.test(textFieldData)) {
+                count_r++;
+            }
+            document.getElementById('p4').innerHTML = `This string contains ${count_r} r${count_r>1 || count_r == 0 ? "'s":""}`;
+        }
+
+        // Just as the above, will need to make the regex global. Remember to add the case insensitive modifier
+        function replace_fox() {
+            var textFieldData = document.getElementById('mydata').value;
+            var replacement = textFieldData.replace(containsFox, "bear");
+            var check = textFieldData.match(containsFox);
+            if (check) {
+                document.getElementById('p5').innerHTML = `${textFieldData} has been replaced with: ${replacement}`;
+            } else {
+                document.getElementById('p5').innerHTML = `${textFieldData} has no string "fox". Nothing has changed`;
+            }
+        }
+
+        // HINT: the full regex for all three conditions can be large, potentially break it into multiple regex checks instead of one large equation
+        function pass_verify() {
+            var textFieldData = document.getElementById('mydata').value;
+            var hasLC = textFieldData.match(containsLC);
+            var hasUC = textFieldData.match(containsUC);
+            var hasDg = textFieldData.match(containsDigit);
+            if (hasLC && hasUC && hasDg) {
+                document.getElementById('p6').innerHTML = `This is quite a secure password: ${textFieldData}`;
+            } else {
+                document.getElementById('p6').innerHTML = `This is the most a secure password: ${textFieldData}`;
+            }
+        }
+    </script>
+</body>
+
+</html>

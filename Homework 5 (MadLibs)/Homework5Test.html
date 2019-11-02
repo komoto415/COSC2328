@@ -25,7 +25,7 @@
             </select>
         </form>
         <br>
-        <button onclick="generateMadLib()" id="button1">Generate Template Madlib!</button>
+        <button onclick="generateMadLib(this)" id="button1">Generate Template Madlib!</button>
         <br>
     </div>
     <h3 id="h3001"></h3>
@@ -78,7 +78,7 @@
         var state = 0;
         const isVowel = new RegExp(/^[aeiou]$/i)
 
-        function generateMadLib() {
+        function generateMadLib(x) {
             var pickStory = document.getElementById("storiesSelect").value;
             var inputDiv = document.getElementById("inputFields");
             var storyP = document.getElementById("p001");
@@ -99,7 +99,7 @@
                 addWordButton.setAttribute("id", "addWordButton");
                 addWordButton.setAttribute("type", "button");
                 addWordButton.setAttribute("value", "Add Words!");
-                addWordButton.setAttribute("onclick", "generateMadLib()");
+                addWordButton.setAttribute("onclick", "generateMadLib(this)");
                 // addWordButton.style.width = "200px";
                 // addWordButton.style.height = "75px";
                 // addWordButton.style.background = "green";
@@ -183,7 +183,17 @@
             }
             var d1V = document.getElementById("d1").value == "" || !isDayOfWeek(document.getElementById("d1").value) ? "(8)" : titleCaseWord(document.getElementById("d1").value);
             var t1V = document.getElementById("t1").value == "" ? "(9)" : document.getElementById("t1").value;
-
+            if (x.id == "button1") {
+                pn1V = "(1)";
+                pn2V = "(2)";
+                asj1V = "(3)";
+                adj2V = "(4)";
+                c1V = "(5)";
+                ani1V = "(6)";
+                v1V = "(7)";
+                d1V = "(8)";
+                t1V = "(9)";
+            }
             if (pickStory == "story1") {
                 storyP.innerHTML = `Hello! My name is ${pn1V}. I have a best friend whose name is ${pn2V}.
                 My favourite colour${(c1V.split(' ').length > 1) ? "s" : ""}
