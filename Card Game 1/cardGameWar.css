@@ -67,7 +67,7 @@
     text-align: center;
 }
 .buttons {
-    margin: 25 10;
+    margin: 5 10;
     text-align: center;
     /* display: block; */
     border-color: #000000;
@@ -76,4 +76,7 @@
     width: auto;
     height: 50px;
     font-size: 130%;
+}
+#discToDeck {
+    opacity: 0;
 }

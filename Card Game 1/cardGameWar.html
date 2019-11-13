@@ -15,14 +15,15 @@
 
 <body>
     <div class="footer">
-        <button onclick="test1()" type="button" class="buttons" name="newGame" width="200">New Game</button>
-        <button onclick="nextRound()" type="button" class="buttons" id="nextRound" name="nextRound">Next Round</button>
-        <h2 id="00h2" style="font-size: 125%"></h2>
+        <button onclick="newGame()" type="button" class="buttons" id="newGame">New Game</button>
+        <button onclick="nextRound()" type="button" class="buttons" id="nextRound">Next Round</button>
+        <br>
+        <button onclick="discToDeck()" type="button" class="buttons" id="discToDeck">Shuffle Discard Pile Into Deck</button>
     </div>
     <div class="row">
         <div class="column side">
             <h2 class="p1Dec">Student</h2>
-            <h3 id="p1DeckHead">Deck (26)</h3>
+            <h3 id="p1DeckHead">Hand (26)</h3>
             <div class="deck">
                 <img onmouseover="getDeckCount(this)" class="cards" id="p1Play" src="./Card_Example/Deck/purple_back.jpg"></img>
                 <!-- <div class="inside">
@@ -53,7 +54,7 @@
 
         <div class="column side">
             <h2 class="p2Dec">Michaels</h2>
-            <h3 id="p2DeckHead">Deck (26)</h3>
+            <h3 id="p2DeckHead">Hand (26)</h3>
             <div class="deck">
                 <img onmouseover="getDeckCount(this)" class="cards" id="p2Play" src="./Card_Example/Deck/purple_back.jpg"></img>
                 <!-- <div class="inside">
@@ -88,15 +89,11 @@
         // console.log(pl1Deck);
         // console.log(pl2Deck);
 
-        function test1() {
-            // state = 0;
+        function newGame() {
             pl1Deck = [];
             pl2Deck = [];
             pl1Disc = [];
             pl2Disc = [];
-
-            rounds = 0;
-            document.getElementById('rounds').innerHTML = "Rounds Played: " + rounds;
             tmp = new Deck()
             for (var i = 0; i < 26; i++) {
                 pl1Deck[i] = tmp.deck[i];
@@ -104,11 +101,19 @@
             for (var i = 0; i < 26; i++) {
                 pl2Deck[i] = tmp.deck[i + 26];
             }
+
+            rounds = 0;
+            document.getElementById('rounds').innerHTML = "Rounds Played: " + rounds;
             document.getElementById('p1Deck').src = './Card_Example/Deck/Red_back.jpg';
             document.getElementById('p2Deck').src = './Card_Example/Deck/Red_back.jpg';
             document.getElementById('p1Disc').src = './Card_Example/Deck/Yellow_back.jpg';
             document.getElementById('p2Disc').src = './Card_Example/Deck/Yellow_back.jpg';
+            document.getElementById('p1DiscHead').innerHTML = "Discard Pile (" + pl1Disc.length + ")";
+            document.getElementById('p2DiscHead').innerHTML = "Discard Pile (" + pl2Disc.length + ")";
+            document.getElementById('p1DeckHead').innerHTML = "Hand (" + pl1Deck.length + ")";
+            document.getElementById('p2DeckHead').innerHTML = "Hand (" + pl2Deck.length + ")";
             document.getElementById('win').innerHTML = "Decks have been reset";
+
         }
 
         function getDeckCount(x) {
@@ -133,16 +138,11 @@
             var pCardPlayed = get_top_card(pl1Deck);
             var mCardPlayed = get_top_card(pl2Deck);
             var pWon = false;
+            var winDiv = document.getElementById('win');
             document.getElementById('p1Deck').src = pCardPlayed.icon;
             document.getElementById('p2Deck').src = mCardPlayed.icon;
-            if (pCardPlayed.face > mCardPlayed.face) {
-                pWon = true;
+            pWon = p1Won(pCardPlayed, mCardPlayed);
 
-            } else if (pCardPlayed.face == mCardPlayed.face) {
-                if (compareSuits(pCardPlayed.suit, mCardPlayed.suit) === "player1") {
-                    pWon = true;
-                }
-            }
             if (pl1Disc.length != 0) {
                 document.getElementById('p1DiscHead').innerHTML = "Discard Pile (" + pl1Disc.length + ")";
                 document.getElementById('p1Disc').src = pl1Disc[pl1Disc.length - 2].icon;
@@ -152,32 +152,27 @@
                 document.getElementById('p2Disc').src = pl2Disc[pl2Disc.length - 1].icon;
             }
             if (pWon) {
-                document.getElementById('win').innerHTML = "^== Player wins this round!";
+                winDiv.innerHTML = "^== Player wins this round!";
                 pl1Disc.push(pCardPlayed, mCardPlayed);
             } else {
-                document.getElementById('win').innerHTML = "Michaels wins this round! ==^";
+                winDiv.innerHTML = "Michaels wins this round! ==^";
                 pl2Disc.push(pCardPlayed, mCardPlayed);
             }
-            // if (pl1Deck.length == 0 && pl1Disc.length + pl2Disc.length == 52) {
-            //     alert("Player 1 has ran out of cards in their hand. Shuffling discard pile into hand")
-            //     document.getElementById('p1Disc').src = './Card_Example/Deck/Yellow_back.jpg';
-            //     pl1Deck.push.apply(pl1Deck, pl1Disc);
-            //     pl1Disc = [];
-            //     document.getElementById('p1DiscHead').innerHTML = "Discard Pile (" + pl1Disc.length + ")";
-            //     shuffle(pl1Deck);
-            // }
-            // if (pl2Deck.length == 0 && pl1Disc.length + pl2Disc.length == 52) {
-            //     alert("Player 2 has ran out of cards in their hand. Shuffling discard pile into hand")
-            //     document.getElementById('p2Disc').src = './Card_Example/Deck/Yellow_back.jpg';
-            //     pl2Deck.push.apply(pl2Deck, pl2Disc);
-            //     pl2Disc = [];
-            //     document.getElementById('p2DiscHead').innerHTML = "Discard Pile (" + pl1Disc.length + ")";
-            //     shuffle(pl2Deck);
-            // }
+
+            if (pl1Deck.length == 0 || pl2Deck.length == 0) {
+                document.getElementById('discToDeck').style.opacity = "1";
+                document.getElementById('nextRound').disabled = true;
+                if (pl1Deck.length == 0) {
+                    alert("Player 1 has ran out of cards in their hand. Shuffling discard pile into hand")
+                }
+                if (pl2Deck.length == 0) {
+                    alert("Player 2 has ran out of cards in their hand. Shuffling discard pile into hand")
+                }
+            }
             rounds++;
             document.getElementById('rounds').innerHTML = "Rounds Played: " + rounds;
-            document.getElementById('p1DeckHead').innerHTML = "Deck (" + pl1Deck.length + ")";
-            document.getElementById('p2DeckHead').innerHTML = "Deck (" + pl2Deck.length + ")";
+            document.getElementById('p1DeckHead').innerHTML = "Hand (" + pl1Deck.length + ")";
+            document.getElementById('p2DeckHead').innerHTML = "Hand (" + pl2Deck.length + ")";
 
             // console.log(pl1Deck.length);
             // console.log(pl2Deck.length);
@@ -188,9 +183,54 @@
             // console.log(pl2Disc);
 
         }
-        //(card2Suit != "Daimonds" && card2Suit != "Spades")
+
+        function discToDeck() {
+            // alert(pl1Deck.length)
+            var pCardInPlay = document.getElementById('p1Deck');
+            var mCardInPlay = document.getElementById('p2Deck');
+            var pWon = p1Won(pCardInPlay, mCardInPlay);
+            var winDiv = document.getElementById('win');
+            if (pl1Deck.length == 0 && pl2Deck.length == 0) {
+                winDiv.innerHTML = "Both players shuffled their discard pile into their hand";
+            } else if (pl1Deck.length == 0) {
+                winDiv.innerHTML = "Player 1 shuffled their discard pile into their hand";
+            } else if (pl2Deck.length == 0) {
+                winDiv.innerHTML = "Michaels shuffled their discard pile into their hand";
+            }
+            if (pl1Deck.length == 0 || pl2Deck.length == 0) {
+                document.getElementById('p1Deck').src = './Card_Example/Deck/Red_back.jpg';
+                document.getElementById('p1Disc').src = './Card_Example/Deck/Yellow_back.jpg';
+                pl1Deck.push.apply(pl1Deck, pl1Disc);
+                pl1Disc = [];
+                document.getElementById('p1DiscHead').innerHTML = "Discard Pile (" + pl1Disc.length + ")";
+                shuffle(pl1Deck);
+                document.getElementById('p2Deck').src = './Card_Example/Deck/Red_back.jpg';
+                document.getElementById('p2Disc').src = './Card_Example/Deck/Yellow_back.jpg';
+                pl2Deck.push.apply(pl2Deck, pl2Disc);
+                pl2Disc = [];
+                document.getElementById('p2DiscHead').innerHTML = "Discard Pile (" + pl1Disc.length + ")";
+                shuffle(pl2Deck);
+            }
+            document.getElementById('p1DeckHead').innerHTML = "Hand (" + pl1Deck.length + ")";
+            document.getElementById('p2DeckHead').innerHTML = "Hand (" + pl2Deck.length + ")";
+            document.getElementById('discToDeck').style.opacity = "0";
+            document.getElementById('nextRound').disabled = false;
+
+        }
+
+        function p1Won(pCardPlayed, mCardPlayed) {
+            if (pCardPlayed.face > mCardPlayed.face) {
+                return true;
+
+            } else if (pCardPlayed.face == mCardPlayed.face) {
+                if (compareSuits(pCardPlayed.suit, mCardPlayed.suit) === "player1") {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         function compareSuits(card1Suit, card2Suit) {
-            // var winner;
             if (card1Suit == "Spades") {
                 return "player1";
             } else if (card1Suit == "Daimonds" && card2Suit != "Spades") {
