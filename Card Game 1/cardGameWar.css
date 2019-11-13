@@ -37,9 +37,12 @@
 .deck:hover .cards {
     opacity: 0.4;
 }
-.deck:hover .inside {
-    opacity: 1;
+.discard:hover .cards {
+    opacity: 0.4;
 }
+/* .deck:hover .inside {
+    opacity: 1;
+} */
 .text {
   background-color: #4CAF50;
   color: white;
