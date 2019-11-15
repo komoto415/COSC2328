@@ -34,7 +34,7 @@
 #win {
     text-align: center;
 }
-.deck:hover .cards {
+.hand:hover .cards {
     opacity: 0.4;
 }
 .discard:hover .cards {
@@ -63,7 +63,7 @@
     text-align: center;
 }
 
-.footer {
+.buttonRows {
     text-align: center;
 }
 .buttons {
