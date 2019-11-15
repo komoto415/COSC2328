@@ -26,7 +26,7 @@
             <h2 class="p1Dec">Student</h2>
             <h3 id="p1HandHead">Mana (26)</h3>
             <div class="hand">
-                <img onmouseover="getHandCount(this)" class="cards" id="p1Hand" src="./Card_Example/Deck/purple_back.jpg"></img>
+                <img onmouseover="getHandCount(this)" class="cards" id="p1Hand" src="./Card_Example/Deck/blue_back.jpg"></img>
                 <!-- <div class="inside">
                     <div class="text">John Doe</div>
                 </div> -->
@@ -57,7 +57,7 @@
             <h2 class="p2Dec">Michaels</h2>
             <h3 id="p2HandHead">Mana (26)</h3>
             <div class="hand">
-                <img onmouseover="getHandCount(this)" class="cards" id="p2Hand" src="./Card_Example/Deck/purple_back.jpg"></img>
+                <img onmouseover="getHandCount(this)" class="cards" id="p2Hand" src="./Card_Example/Deck/blue_back.jpg"></img>
                 <!-- <div class="inside">
                     <div class="text">John Doe</div>
                 </div> -->
@@ -94,6 +94,11 @@
         }
 
         function newGame(self) {
+            if (pl1Deck.length + pl1Disc.length > pl2Deck.length + pl2Disc.length) {
+                alert("Michaels has won! You have been banished to the Shadow Relm")
+            } else {
+                alert("Victory! Michaels has been banished to the Shadow Relm")
+            }
             pl1Deck = [];
             pl2Deck = [];
             pl1Disc = [];
