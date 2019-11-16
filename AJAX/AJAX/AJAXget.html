@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function()
+{
+    $("button").click(function()
+    {
+        $.get("dummy.php", function(response, status){
+            alert("Data: " + response + "\nStatus: " + status);
+            $("#replace").html(response);
+        });
+    });
+});
+</script>
+</head>
+<body>
+<span>This simple script will execute a get, and replace the text below with the result of the php file.</span>
+<p id="replace">I will vanish!</p>
+<button>GET!</button>
+
+</body>
+</html>

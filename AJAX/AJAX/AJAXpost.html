@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script>
+			$(document).ready(function()
+			{
+				$("#AJAXpost").click(function()
+				{
+					var n1 = $("#name").val();
+					var s1 = $("#School").val();
+					var m1 = $("#major").val();
+
+					$.post("dummyresponse.php",
+					{
+					  name: n1,
+					  school: s1,
+					  major: m1
+					},
+					function(data,status)
+					{
+						alert("Data: " + data);
+						$("#result").append(data + "<br>");
+					});
+				});
+			});
+		</script>
+	</head>
+	<body>
+		Name: <input type="text" id="name"><br>
+		School: <input type="text" id="School"><br>
+		Major: <input type="text" id="major"><br>
+		<button id="AJAXpost">Submit!</button>
+		<p id="result">Your result is: <br></p>
+	</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+        count = 0;
+        function showHint(str) {
+            if (str.length == 0) {
+                document.getElementById("txtHint").innerHTML = "";
+                return;
+            } else {
+                var xmlhttp = new XMLHttpRequest();
+                console.log(xmlhttp);
+                xmlhttp.onreadystatechange = function() {
+                    console.log(xmlhttp);
+                    console.log(this.status);
+                    console.log(xmlhttp.readyState);
+                    console.log(xmlhttp.responseText);
+                    if (this.readyState == 4 && this.status == 200) {
+                        count++;
+                        document.getElementById("txtHint").innerHTML += '<br>' + count + '. ' + this.responseText;
+                    }
+                };
+                xmlhttp.open("GET", "gethint.php?q=" + str, true);
+                xmlhttp.send();
+            }
+        }
+        
+        function sendPost()
+        {
+            	var xmlhttp = new XMLHttpRequest();
+                console.log(xmlhttp);
+                xmlhttp.onreadystatechange = function() {
+                    console.log(xmlhttp);
+                    console.log(this.status);
+                    console.log(xmlhttp.readyState);
+                    console.log(xmlhttp.responseText);
+                    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                        count++;
+                        document.getElementById("txtHint").innerHTML += '<br>' + count + '. ' + this.responseText;
+                    }
+                };
+                xmlhttp.open("POST", "basic_math.php", true);
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send("num1=123&num2=17&op=plus");
+        }
+        </script>
+    </head>
+    <body>
+    
+    <p><b>Start typing a name in the input field below:</b></p>
+    <form>
+    First name: <input type="text" onkeyup="showHint(this.value)">
+    </form>
+    <button onclick='sendPost()'>This buttons will do the POST</button>
+    <p>Suggestions: <span id="txtHint"></span></p>
+    </body>
+</html>

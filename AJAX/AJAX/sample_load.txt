@@ -1,0 +1,3 @@
+<p>The text contained in this file</p>
+<span style="color:red">Will be read in</span>
+<p style="background-color:green">And replace the original</p>

@@ -1,0 +1,28 @@
+[
+    {
+    "name":"Joe",
+    "age":25,
+    "pets":[
+        { "animal":"dog", "name":"Joseph" },
+        { "animal":"cat", "name":"JoJo" }
+    ]
+    },
+    {
+        "name":"Tim",
+        "age":20,
+        "movies":[
+            { "genre":"Fantasy", "name":"Lord of the Rings" },
+            { "genre":"Science Fiction", "name":"Empire Strikes Back" },
+            { "genre":"Disney", "name":"Aladdin" }
+        ]
+    },
+    {
+       "name":"Ashley",
+        "age":42,
+        "books":[
+            { "genre":"Detective", "name":"Dresden Files" },
+            { "genre":"Science Fiction", "name":"Battletech" },
+            { "genre":"Fantasy", "name":"Pathfinder" }
+        ]
+    }
+]

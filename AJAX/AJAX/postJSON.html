@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function()
+      {
+        $("#json").click(function()
+        {
+          var n1 = $("#name").val();
+          var e1 = $("#email").val();
+          var my_obj = {"name":n1, "email":e1};
+          var my_json = JSON.stringify(my_obj);
+          $("#previous").append(my_json + "<br>");
+
+          $.post("post_json.php",
+					{
+					  my_data: my_json
+					},
+					function(data,status)
+					{
+            $("#result").append(data + "<br>");
+						var result = JSON.parse(data);
+            text = "Name: " + result.name + " your account is registered at: " + result.email + " with a status: " + result.status;
+						$("#replace").append(text + "<br>");
+					});
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h2>This webpage will represent sending and retrieving data from the server as JSON</h2>
+    Name: <input type="text" id="name"><br>
+    Email: <input type="text" id="email"><br>
+    <button id="json">Submit</button>
+    <p id="previous">Your data entered was: <br></p>
+    <p id="result">The JSON that was returned is: <br></p>
+    <p id="replace"></p>
+  </body>
+</html>

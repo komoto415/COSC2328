@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Practice PHP</title>
+    <title>In Class PHP</title>
   </head>
   <div class="header">
       <header style="font-size:200%">

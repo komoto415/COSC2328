@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            var my_obj;
+            var my_obj2;
+            var my_string;
+            count = 0;
+            
+            
+            // Read in from txt file and convert to json
+            $(document).ready(function()
+            {
+                $.get('sample.txt',  function(response)
+                {
+                    my_obj = JSON.parse(response);
+                    my_string = response;
+                });
+            });
+            
+            $(document).ready(function()
+            {
+                $.get('sample.json',  function(response)
+                {
+                    my_obj2 = response;
+                });
+            });
+            
+            $(document).ready(function()
+            {
+                $('#putter').click(function()
+                {
+                    if(count >= my_obj.length)
+                    {
+                        $('#data').append('<b>NO MORE DATA TO BE READ</b><br>');
+                    }
+                    else
+                    {
+                        count2 = 0;
+                        $('#data').append('Object: ' + count + '<br>');
+                        for(x in my_obj[count])
+                        {
+                            if(count2 != 2)
+                            {
+                            $('#data').append('<b>' +x + ':</b> ' + my_obj[count][x] + '<br>');
+                            count2++;
+                            }
+                            else
+                            {
+                                for(y =0; y < my_obj[count][x].length; y++)
+                                {
+                                    $('#data').append('<b>' + x + ':</b> ')
+                                    for(z in my_obj[count][x][y])
+                                    {
+                                        $('#data').append('<i>' + z + ':</i> ' + my_obj[count][x][y][z] + ' ');
+                                    }
+                                    $('#data').append('<br>')
+                                }
+                            }
+                        }
+                        count++;
+                    }
+                });
+            });
+            
+            $(document).ready(function()
+            {
+                $('#attrGrab').click(function()
+                {
+                    for(i = 0; i <  my_obj.length; i++)
+                    {
+                        for(y in my_obj[i])
+                        {
+                            $('#attr').append(y + '<br>');
+                        }
+                    }
+                });
+            });
+        </script>
+        <h3>This webpage will load up information from a JSON file, parse it, and place it into the webpage.</h3>
+        <button id="putter">Click me to load the next chunk of information</button><br>
+        <button id="attrGrab">Click me to load the list of all attributes</button><br>
+        <span id='data'></span><br>
+        <span id='attr'></span><br>
+    </body>
+</html>

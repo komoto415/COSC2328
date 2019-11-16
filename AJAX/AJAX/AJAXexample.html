@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			body
+			{
+				background-color: lightblue;
+			}
+		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script>
+			// This function implements the AJAX load
+			$(document).ready(function()
+			{
+				$("#load").click(function()
+				{
+				    alert("We are loading in information from sample_load.txt");
+					$("#div1").load("sample_load.txt");
+				});
+			});
+			
+			// This program calls average.php with GET
+			$(document).ready(function()
+			{
+				$("#getavg").click(function()
+				{
+				    
+				    $.getScript( "randavg.js", function( data, textStatus, jqxhr ) 
+				    {
+                      console.log( data ); // Data returned
+                      console.log( textStatus ); // Success
+                      console.log( jqxhr.status ); // 200
+                      console.log( jqxhr); // 200
+                      console.log( "Load was performed." );
+                    });
+				    
+				});
+			});
+			
+			// This method uses post to send some basic data off to register.php
+			$(document).ready(function()
+			{
+				$("#register").click(function()
+				{
+					var n1 = $("#name").val();
+					var e1 = $("#email").val();
+					var p1 = $("#password").val();
+					$.post("register.php",
+					{
+					  name: n1,
+					  email: e1,
+					  pass: p1
+					},
+					function(data)
+					{
+						console.log( data );
+						console.log( this );
+						$("#regstat").append(data + "<br>");
+					});
+				});
+			});
+			
+			// This method utilizes post to pass information from number fields and radio buttons
+			// to the server for calculation
+			$(document).ready(function()
+			{
+			  $('#math').click(function()
+			  {
+				var selValue = $('input[name=op]:checked').val();
+				if(selValue == undefined)
+				{
+					selValue = "No Op";
+				}
+				var n1 = $("#num1").val();
+				var n2 = $("#num2").val();
+				
+				$.ajax(
+				{
+    				url: "basic_math.php",
+    				type: 'post',
+    				data: 
+    				{
+    				  num1: n1,
+    				  num2: n2,
+    				  op: selValue
+    				},
+    				success: function(data)
+    				{
+    					$("#result").append(data + "<br>");
+				}
+			    });
+			      
+			  });
+			});	
+			
+			
+		</script>
+	</head>
+	<body>
+		<h1>This webpage will demonstrate usage of basic AJAX calls</h1>
+		<div id="div1">If you click the button below, the text here will be replaced!</div>
+		<button id="load">Replace!</button><br><br>
+		
+		<p id="avg">If you press the button below, an average of four random numbers will be generated and appeneded to this paragraph!<p>
+		<button id="getavg">Make Average!</button><br><br>
+		
+		<p>Please enter basic identification information below to be registered</p>
+		Name: <input type="text" id="name"><br>
+		Email: <input type="text" id="email"><br>
+		Password: <input type="password" id="pass"><br>
+		<button id="register">Register Now!</button><br>
+		<p id="regstat"></p><br><br>
+		
+		<p>Please insert two numbers and select an operation!<p>
+		Num1: <input type="number" id="num1"><br>
+		Num2: <input type="number" id="num2"><br>
+		+ <input type="radio" name="op" value="plus"><br>
+		- <input type="radio" name="op" value="subt"><br>
+		* <input type="radio" name="op" value="mult"><br>
+		/ <input type="radio" name="op" value="divi"><br>
+		<button id="math">Do Math!</button>
+		<p style="background-color:red" id="result"></p>
+		
+		
+	</body>
+</html>
