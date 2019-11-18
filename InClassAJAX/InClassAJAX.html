@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title> In Class AJAX</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<header style="font-size: 200%">
+    In Class JQuery and AJAX
+</header>
+
+<body>
+    <button id="submit">Submit Information</button>
+    <div class="inputFields">
+        <table>
+            <tr>
+                <td>Name: </td>
+                <td><input type="text" id="name"></td>
+            </tr>
+            <tr>
+                <td>Nickname: </td>
+                <td><input type="text" id="nname"></td>
+            </tr>
+            <tr>
+                <td>Class: </td>
+                <td><input type="text" id="class"></td>
+            </tr>
+            <tr>
+                <td>Major: </td>
+                <td><input type="text" id="major"></td>
+            </tr>
+            <tr>
+                <td>E-mail: </td>
+                <td><input type="text" id="email"></td>
+            </tr>
+            <tr>
+                <td>Phone Number: </td>
+                <td><input type="text" id="phone"></td>
+            </tr>
+        </table>
+
+    </div>
+    <div id="display"></div>
+    <script>
+        $(document).ready(function() {
+            $("#submit").click(function() {
+                var n1 = $("#name").val();
+                var n2 = $("#nname").val();
+                var c1 = $("#class").val();
+                var m1 = $("#major").val();
+                var e1 = $("#email").val();
+                var p1 = $("#phone").val();
+                if (validInput(n1, n2, c1, m1, e1, p1)) {
+                    $.post("welcome.php", {
+                            name: n1,
+                            nname: n2,
+                            class: c1,
+                            major: m1,
+                            email: e1,
+                            phone: p1
+                        },
+                        function(data) {
+                            $("#display").append(data);
+                        });
+                }
+            });
+        });
+
+        function validInput(name, nname, class1, major, email, phone) {
+            var valid = true;
+            if (name.trim() == "" || nname.trim() == "" || class1.trim() == "" ||
+                major.trim() == "" || email.trim() == "" || phone.trim() == "") {
+                alert("One or several inputs are empty! Data will not be sent")
+                valid = false;
+            } else if (!phone.match(/(^\d{10}$)/)) {
+                alert("Not a valid phone number!")
+                valid = false;
+            }
+            // } else if () {}
+            return valid;
+        }
+    </script>
+</body>
+
+</html>
