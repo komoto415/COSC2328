@@ -1,8 +1,3 @@
-function Player(deck) {
-    this.hand = [];
-    this.winCount = 0;
-}
-
 // This class contains implementation for a card and a deck
 
 // This defines a single card. It has three attributes:

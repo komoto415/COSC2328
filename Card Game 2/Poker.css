@@ -1,0 +1,54 @@
+.column {
+    float: left;
+}
+.column.mid {
+    float: center;
+}
+.column.left {
+    width: 30%;
+}
+.column.right {
+    width: 70%;
+}
+.column.left.mid {
+    padding-top: 60px;
+}
+.c {
+    float: left;
+    width: 50%;
+}
+@media screen and (max-width: 600px) {
+    .column.left,
+    .column.right {
+        width: 100%;
+    }
+}
+.divs {
+    text-align: center;
+}
+.cards {
+    width: 100px;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+#deck {
+    width: 150px;
+}
+.midCard {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+.buttons {
+    margin: 5 10;
+    text-align: center;
+    /* display: block; */
+    border-color: #000000;
+    background-color: #808080;
+    color: #000000;
+    width: auto;
+    height: 50px;
+    font-size: 130%;
+}
