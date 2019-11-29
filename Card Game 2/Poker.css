@@ -27,12 +27,9 @@
     text-align: center;
 }
 .cards {
-    width: 100px;
+    width: 150px;
     transition: .5s ease;
     backface-visibility: hidden;
-}
-#deck {
-    width: 150px;
 }
 .midCard {
     -webkit-transform: rotate(90deg);
@@ -44,7 +41,6 @@
 .buttons {
     margin: 5 10;
     text-align: center;
-    /* display: block; */
     border-color: #000000;
     background-color: #808080;
     color: #000000;
