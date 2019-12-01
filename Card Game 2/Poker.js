@@ -22,6 +22,7 @@ function nextRound() {
         player2Hand.push(card);
     }
     document.getElementById('win').innerHTML = '';
+    document.getElementById('reveal').disabled = false;
 }
 
 function revealHands() {
@@ -56,6 +57,8 @@ function evaluateHands() {
         }
         p2O[player2Hand[i].face] = count;
     }
+
+    // What kind of hands do they have
     switch (Object.keys(p1O).length) {
         case 2:
             console.log("Player has a four of a kind or a fullhouse");
@@ -86,75 +89,90 @@ function evaluateHands() {
     }
 
     if (Object.keys(p2O).length > Object.keys(p1O).length) {
-        document.getElementById('win').innerHTML = "Player has won this round!"
-        p1Wins++;
-        console.log(p1Wins);
-        document.getElementById('p1Wins').innerHTML = "Wins: " + p1Wins;
+        playerWinUpdate();
     }
     if (Object.keys(p2O).length < Object.keys(p1O).length) {
-        document.getElementById('win').innerHTML = "Michaels has won this round!"
-        p2Wins++;
-        console.log(p2Wins);
-        document.getElementById('p2Wins').innerHTML = "Wins: " + p2Wins;
+        michaelsWinUpdate();
     }
-    // if (Object.keys(p2O).length == Object.keys(p1O).length) {
-    //     let length = Object.keys(p2O).length;
-    //     console.log(length);
-    //     document.getElementById('win').innerHTML = "Tie for now need to FIXXXXXX :C"
-    //     switch (length) {
-    //         case 2:
-    //             console.log("Both have four of a kinds");
-    //             break;
-    //         case 3:
-    //             console.log("Both have a triple or a double pair");
-    //             p1isDoublePair = isDoubelPair(p1O)
-    //             if (p1isDoublePair) {
-    //                 console.log("p1 is a double pair");
-    //             } else {
-    //                 console.log("p1 is a three of a kind");
-    //             }
-    //
-    //             p2isDoublePair = isDoubelPair(p2O)
-    //             if (p2isDoublePair) {
-    //                 console.log("p2 is a double pair");
-    //             } else {
-    //                 console.log("p2 is a three of a kind");
-    //             }
-    //             break;
-    //         case 4:
-    //             console.log("Both only have a pair");
-    //             break;
-    //         case 5:
-    //             p1isStraight = isStraight(p1O);
-    //             if (p1isStraight) {
-    //                 console.log("p1 is a straight");
-    //             } else {
-    //                 console.log("p1 is only singles");
-    //             }
-    //
-    //             p2isStraight = isStraight(p2O);
-    //             if (p2isStraight) {
-    //                 console.log("p2 is a straight");
-    //             } else {
-    //                 console.log("p2 is only singles");
-    //             }
-    //
-    //             if (p1isStraight && !p2isStraight) {
-    //                 console.log("Player wins!");
-    //             } else if (!p1isStraight && p2isStraight) {
-    //                 console.log("Michaels wins!");
-    //             } else if (!p1isStraight && !p2isStraight) {
-    //                 console.log("now lets compare the highest single");
-    //                 p1won = win(p1O, p2O);
-    //                 if (p1won) {
-    //                     console.log("Player wins!");
-    //                 } else {
-    //                     console.log("Michaels wins!");
-    //                 }
-    //             }
-    //             break;
-    //     }
-    // }
+    // /*
+    if (Object.keys(p2O).length == Object.keys(p1O).length) {
+        let length = Object.keys(p2O).length;
+        // console.log(length);
+        document.getElementById('win').innerHTML = "Ties for now need to FIXXXXXX :C. isStraight works"
+        switch (length) {
+            /*case 2:
+                console.log("Both have four of a kinds");
+                break;
+            case 3:
+                console.log("Both have a triple or a double pair");
+                p1isDoublePair = isDoubelPair(p1O)
+                if (p1isDoublePair) {
+                    console.log("p1 is a double pair");
+                } else {
+                    console.log("p1 is a three of a kind");
+                }
+                p2isDoublePair = isDoubelPair(p2O)
+                if (p2isDoublePair) {
+                    console.log("p2 is a double pair");
+                } else {
+                    console.log("p2 is a three of a kind");
+                }
+                break;
+            case 4:
+                console.log("Both only have a pair");
+                break;*/
+            case 5:
+                p1isStraight = isStraight(p1O);
+                console.log(p1isStraight);
+                if (p1isStraight) {
+                    console.log("p1 is a straight");
+                }
+                if (!p1isStraight) {
+                    console.log("p1 is only singles");
+                }
+
+                p2isStraight = isStraight(p2O);
+                console.log(p2isStraight);
+                if (p2isStraight) {
+                    console.log("p2 is a straight");
+                }
+                if (!p2isStraight) {
+                    console.log("p2 is only singles");
+                }
+
+                if (p1isStraight && !p2isStraight) {
+                    console.log("Player wins!");
+                } else if (!p1isStraight && p2isStraight) {
+                    console.log("Michaels wins!");
+                } else if (!p1isStraight && !p2isStraight) {
+                    console.log("No straights. Compare highest singles");
+                    p1won = win(p1O, p2O);
+                    if (p1won) {
+                        playerWinUpdate();
+                    }
+                    if (!p1won) {
+                        michaelsWinUpdate();
+                    }
+                }
+                break;
+        }
+    }
+    // */
+    document.getElementById('reveal').disabled = true;
+}
+
+function michaelsWinUpdate() {
+    document.getElementById('win').innerHTML = "Michaels has won this round!"
+    p2Wins++;
+    console.log(p2Wins);
+    document.getElementById('p2Wins').innerHTML = "Wins: " + p2Wins;
+}
+
+function playerWinUpdate() {
+    document.getElementById('win').innerHTML = "Player has won this round!"
+    p1Wins++;
+    console.log(p1Wins);
+    document.getElementById('p1Wins').innerHTML = "Wins: " + p1Wins;
 }
 
 function win(p1O, p2O) {
