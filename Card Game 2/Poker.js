@@ -233,10 +233,8 @@ function compareSuits(card1Suit, card2Suit) {
 
 function isStraight(test) {
     justFace = []
-    index = 0;
     for (key in test) {
-        justFace[index] = key;
-        index++;
+        justFace.append(key);
     }
     for (var i = 0; i < 4; i++) {
         if (justFace[i] <= justFace[i + 1]) {
@@ -244,6 +242,10 @@ function isStraight(test) {
         }
     }
     return true
+}
+
+function isFlush(test) {
+
 }
 
 function isDoubelPair(test) {

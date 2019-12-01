@@ -80,3 +80,49 @@ function get_top_card(array) {
     }
     return array.pop();
 }
+
+function myHandType(handList, handDict) {
+    let type = "";
+    let handLength = Object.keys(handDict).length;
+    switch (handLength) {
+        case 2:
+            console.log("Player has a four of a kind or a fullhouse");
+            break;
+        case 3:
+            console.log("Player has a triple or a double pair");
+            break;
+        case 4:
+            console.log("Player has one pair");
+            type = "singePair";
+            break;
+        case 5:
+            console.log("Player has only singles or a stright or a flush");
+            if (isStraight(handDict)) {
+                type = "straight"
+            }
+            break;
+    }
+}
+
+function isStraight(test) {
+    justFace = []
+    for (key in test) {
+        justFace.append(key);
+    }
+    for (var i = 0; i < 4; i++) {
+        if (justFace[i] <= justFace[i + 1]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function isFlush(test) {
+    justSuit = [];
+    for (key in test) {
+        justSuit.append(key.suit);
+    }
+    for (var i = 0; i < 4; i++) {
+        if (justSuit[i] != justSuit)
+    }
+}
