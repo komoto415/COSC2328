@@ -59,6 +59,7 @@ function evaluateHands() {
     }
 
     // What kind of hands do they have
+    /*
     switch (Object.keys(p1O).length) {
         case 2:
             console.log("Player has a four of a kind or a fullhouse");
@@ -87,78 +88,63 @@ function evaluateHands() {
             console.log("Michaels has only singles or a straight");
             break;
     }
-
-    if (Object.keys(p2O).length > Object.keys(p1O).length) {
+    */
+    var p1HandLen = Object.keys(p1O).length;
+    var p2HandLen = Object.keys(p2O).length;
+    if (p2HandLen > p1HandLen) {
         playerWinUpdate();
-    }
-    if (Object.keys(p2O).length < Object.keys(p1O).length) {
+    } else if (p2HandLen < p1HandLen) {
         michaelsWinUpdate();
-    }
-    // /*
-    if (Object.keys(p2O).length == Object.keys(p1O).length) {
-        let length = Object.keys(p2O).length;
-        // console.log(length);
+    } else if (p1HandLen == p2HandLen) {
+        let type = "";
+        let length = p1HandLen;
         document.getElementById('win').innerHTML = "Ties for now need to FIXXXXXX :C. isStraight works"
-        switch (length) {
-            /*case 2:
-                console.log("Both have four of a kinds");
-                break;
-            case 3:
-                console.log("Both have a triple or a double pair");
-                p1isDoublePair = isDoubelPair(p1O)
-                if (p1isDoublePair) {
-                    console.log("p1 is a double pair");
-                } else {
-                    console.log("p1 is a three of a kind");
-                }
-                p2isDoublePair = isDoubelPair(p2O)
-                if (p2isDoublePair) {
-                    console.log("p2 is a double pair");
-                } else {
-                    console.log("p2 is a three of a kind");
-                }
-                break;
-            case 4:
-                console.log("Both only have a pair");
-                break;*/
-            case 5:
-                p1isStraight = isStraight(p1O);
-                console.log(p1isStraight);
-                if (p1isStraight) {
-                    console.log("p1 is a straight");
-                }
-                if (!p1isStraight) {
-                    console.log("p1 is only singles");
-                }
 
-                p2isStraight = isStraight(p2O);
-                console.log(p2isStraight);
-                if (p2isStraight) {
-                    console.log("p2 is a straight");
-                }
-                if (!p2isStraight) {
-                    console.log("p2 is only singles");
-                }
-
-                if (p1isStraight && !p2isStraight) {
-                    console.log("Player wins!");
-                } else if (!p1isStraight && p2isStraight) {
-                    console.log("Michaels wins!");
-                } else if (!p1isStraight && !p2isStraight) {
-                    console.log("No straights. Compare highest singles");
-                    p1won = win(p1O, p2O);
-                    if (p1won) {
-                        playerWinUpdate();
-                    }
-                    if (!p1won) {
-                        michaelsWinUpdate();
-                    }
-                }
-                break;
+        p1Hand = myHandType(player1Hand, p1O);
+        p2Hand = myHandType(player2Hand, p2O);
+        console.log(p1Hand);
+        console.log(p2Hand);
+        if (p1Hand == "singles" && p2Hand == "singles") {
+            p1Won = singlesWin(p1O, p2O);
+            if (p1Won) {
+                playerWinUpdate();
+            }
+            if (!p1Won) {
+                michaelsWinUpdate();
+            }
         }
+        document.getElementById('reveal').disabled = true;
     }
-    // */
-    document.getElementById('reveal').disabled = true;
+}
+
+function myHandType(handList, handDict) {
+    let type = "";
+    let handLength = Object.keys(handDict).length;
+    switch (handLength) {
+        case 2:
+            // console.log("Player has a four of a kind or a fullhouse");
+            type = isFullhouseOrFour(handDict);
+            console.log(type)
+            return type;
+        case 3:
+            // console.log("Player has a triple or a double pair");
+            type = isDoubelPairOrTriple(handDict);
+            console.log(type)
+            return type;
+        case 4:
+            // console.log("Player has one pair");
+            type = "singlePair";
+            console.log(type)
+            return type;
+        case 5:
+            // console.log("Player has only singles or a stright or a flush");
+            type += isStraight(handDict) + isFlush(handList)
+            if (type == "") {
+                type = "singles"
+            }
+            console.log(type)
+            return type;
+    }
 }
 
 function michaelsWinUpdate() {
@@ -175,7 +161,7 @@ function playerWinUpdate() {
     document.getElementById('p1Wins').innerHTML = "Wins: " + p1Wins;
 }
 
-function win(p1O, p2O) {
+function singlesWin(p1O, p2O) {
     let max1 = -1;
     let max2 = -1;
     for (key in p1O) {
@@ -189,17 +175,16 @@ function win(p1O, p2O) {
     if (max1 > max2) {
         return true;
     } else if (max1 == max2) {
-        console.log("Need to implement suit comparison");
         let cardP1 = "";
         let cardP2 = "";
         for (var i = 0; i < 5; i++) {
             if (player1Hand[i].face == max1) {
-                cardP1 = i.suit;
+                cardP1 = player1Hand[i].suit;
             }
         }
         for (var i = 0; i < 5; i++) {
             if (player2Hand[i].face == max2) {
-                cardP2 = i.suit;
+                cardP2 = player1Hand[i].suit;
             }
         }
         console.log(cardP1);
@@ -213,8 +198,6 @@ function win(p1O, p2O) {
                 console.log("Michaels wins");
                 break;
         }
-        console.log("Player 1 Won!");
-
     }
     return false;
 }
@@ -231,28 +214,44 @@ function compareSuits(card1Suit, card2Suit) {
     }
 }
 
+function isFullhouseOrFour(test) {
+    for (key in test) {
+        if (test[key] == 3 || test[key] == 2) {
+            return "fullhouse";
+        }
+    }
+    return "four";
+}
+
 function isStraight(test) {
     justFace = []
+    index = 0;
     for (key in test) {
-        justFace.append(key);
+        justFace[index] = key;
+        index++;
     }
     for (var i = 0; i < 4; i++) {
         if (justFace[i] <= justFace[i + 1]) {
-            return false;
+            return "";
         }
     }
-    return true
+    return "straight"
 }
 
 function isFlush(test) {
-
-}
-
-function isDoubelPair(test) {
-    for (key in test) {
-        if (test[key] == 2) {
-            return true;
+    for (var i = 0; i < 4; i++) {
+        if (test[i].suit != test[i + 1].suit) {
+            return "";
         }
     }
-    return false;
+    return "flush"
+}
+
+function isDoubelPairOrTriple(test) {
+    for (key in test) {
+        if (test[key] == 2) {
+            return "doublePair";
+        }
+    }
+    return "triple";
 }
