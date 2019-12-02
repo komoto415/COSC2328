@@ -116,12 +116,81 @@ function comapareHandType(p1Hand, p2Hand) {
     whoWon = ""
     if (p1Hand == p2Hand) {
         whoWon = "need to implement same hand type tie breaker"
+        console.log(whoWon);
+        let compare1 = -1;
+        let compare2 = -1;
         switch (p1Hand) {
-            case 10:
-
-                whoWon = ""
+            case 3: // double pair case
+                let dPair1 = [];
+                let dPair2 = [];
+                for (key in p1O) {
+                    if (p1O[key] == 2) {
+                        dPair1.push(key);
+                    }
+                }
+                for (key in p2O) {
+                    if (p2O[key] == 2) {
+                        dPair2.push(key);
+                    }
+                }
+                compare1 = Math.max(dPair1);
+                compare2 = Math.max(dPair2);
+                whoWon = compareN(compare1, compare2);
+                break;
+            case 2: // single pair case
+                for (key in p1O) {
+                    if (p1O[key] == 2) {
+                        compare1 = key;
+                    }
+                }
+                for (key in p2O) {
+                    if (p2O[key] == 2) {
+                        compare1 = key;
+                    }
+                }
+                whoWon = compareN(compare1, compare2);
                 break;
 
+            case 7: //  fullhouse case
+            case 4: // triple case
+                for (key in p1O) {
+                    if (p1O[key] == 3) {
+                        compare1 = key;
+                    }
+                }
+                for (key in p2O) {
+                    if (p2O[key] == 3) {
+                        compare2 = key;
+                    }
+                }
+                whoWon = compareN(compare1, compare2);
+                break;
+            case 8: // four of a kind case
+                for (key in p1O) {
+                    if (p1O[key] == 4) {
+                        compare1 = key;
+                    }
+                }
+                for (key in p2O) {
+                    if (p2O[key] == 4) {
+                        compare2 = key;
+                    }
+                }
+                whoWon = compareN(compare1, compare2);
+                break;
+            case 10: // royal flush case
+            case 9: // straight flush case
+            case 6: // flush case
+            case 5: // straight case
+            case 1: // single case
+                for (key in p1O) {
+                    compare1 = key;
+                }
+                for (key in p2O) {
+                    compare2 = key;
+                }
+                break;
+                whoWon = compareSingles(compare1, compare2);
         }
     } else if (p1Hand > p2Hand) {
         whoWon = "p1"
@@ -129,6 +198,10 @@ function comapareHandType(p1Hand, p2Hand) {
         whoWon = "p2"
     }
     return whoWon
+}
+
+function getNthCase(n, dict) {
+    console.log("not yet implemented");
 }
 
 function myHandType(handList, handDict) {
@@ -192,48 +265,218 @@ function playerWinUpdate() {
     document.getElementById('p1Wins').innerHTML = "Wins: " + p1Wins;
 }
 
-function singlesWin() {
-    let max1 = -1;
-    let max2 = -1;
-    for (key in p1O) {
-        max1 = key;
-    }
-    console.log(max1);
-    for (key in p2O) {
-        max2 = key;
-    }
-    console.log(max2);
-    if (max1 > max2) {
-        return true;
-    } else if (max1 == max2) {
+function compareSingles(cardP1, cardP2) {
+    if (cardP1 > cardP2) {
+        return "p1";
+    } else if (cardP1 == cardP2) {
         let cardP1 = "";
-        let cardP2 = "";
         for (var i = 0; i < 5; i++) {
-            if (player1Hand[i].face == max1) {
+            if (player1Hand[i].face == cardP1) {
                 cardP1 = player1Hand[i].suit;
             }
         }
+
+        let cardP2 = "";
         for (var i = 0; i < 5; i++) {
-            if (player2Hand[i].face == max2) {
+            if (player2Hand[i].face == cardP2) {
                 cardP2 = player1Hand[i].suit;
             }
         }
-        console.log(cardP1);
-        console.log(cardP2);
-        p1Won = compareSuits(cardP1, cardP2);
-        switch (p1Won) {
-            case "player1":
 
-                break;
+        let whoWon = compareSuits(cardP1, cardP2);
+        switch (whoWon) {
+            case "player1":
+                return "p1";
             case "player2":
-                break;
+                return "p2";
         }
     }
-    return false;
+    return "p2";
+}
+//
+// function compareDoubles(cardP1, cardP2) {
+//     let pair1 = [];
+//     for (var i = 0; i < 5; i++) {
+//         if (player1Hand[i].face == cardP1) {
+//             pair1.push(player1Hand[i].suit);
+//         }
+//     }
+//
+//     let pair2 = [];
+//     for (var i = 0; i < 5; i++) {
+//         if (player2Hand[i].face == cardP2) {
+//             pair2.push(player2Hand[i].suit);
+//         }
+//     }
+//     compare1 = getDouble(pair1);
+//     compare2 = getDouble(pair2);
+//     let whoWon = compareSuits(compare1, compare2);
+//     switch (whoWon) {
+//         case "player1":
+//             return "p1"
+//         case "player2":
+//             return "p2"
+//     }
+// }
+//
+function getDouble(doubleList) {
+    let pair_0 = doubleList[0];
+    let pair_1 = doubleList[1]
+    let compare1 = compareSuits(pair_0, pair_1);
+    switch (compare1) {
+        case "player1":
+            compare1 = pair_0;
+            break;
+        case "player2":
+            compare1 = pair_1;
+            break;
+    }
+    return comapre1;
+}
+//
+// function compareTriples(cardP1, cardp2) {
+//     let triple1 = [];
+//     let triple2 = [];
+//     for (var i = 0; i < 5; i++) {
+//         if (player1Hand[i].face == cardP1) {
+//             triple1.push(player1Hand[i].suit);
+//         }
+//     }
+//     for (var i = 0; i < 5; i++) {
+//         if (player2Hand[i].face == cardP2) {
+//             triple2.push(player2Hand[i].suit);
+//         }
+//     }
+//     compare1 = getTriple(triple1);
+//     compare2 = getTriple(triple2);
+//     let whoWon = compareSuits(comapre1, compare2);
+//     switch (whoWon) {
+//         case "player1":
+//             return "p1"
+//         case "player 2":
+//             return "p2"
+//     }
+// }
+//
+function getTriple(tripleList) {
+    let triple_0 = tripleList[0];
+    let triple_1 = tripleList[1];
+    let triple_2 = tripleList[2];
+    let newCompare = compareSuits(triple_0, triple_1);
+    switch (newCompare) {
+        case "player1":
+            newCompare = triple_0;
+            break;
+        case "player2":
+            newCompare = triple_1;
+            break;
+    }
+    let compare1 = compareSuits(newCompare, triple_2);
+    switch (compare1) {
+        case "player1":
+            compare1 = newCompare
+            break;
+        case "player2":
+            compare1 = triple_2;
+            break;
+    }
+    return compare1;
+}
+//
+// function compareFour(cardP1, cardP2) {
+//     let four1 = [];
+//     let four2 = [];
+//     for (var i = 0; i < 5; i++) {
+//         if (player1Hand[i].face == cardP1) {
+//             four1.push(player1Hand[i].suit);
+//         }
+//     }
+//     for (var i = 0; i < 5; i++) {
+//         if (player2Hand[i].face == cardP2) {
+//             four2.push(player2Hand[i].suit);
+//         }
+//     }
+//     let compare1 = getFour(four1);
+//     let compare2 = getFour(four2);
+//     let whoWon = compareSuits(compare1, compare2);
+//     switch (whoWon) {
+//         case "player1":
+//             return "p1";
+//         case "player2":
+//             return "p2";
+//     }
+// }
+//
+function getFour(fourList) {
+    let four_0 = fourList[0];
+    let four_1 = fourList[1];
+    let four_2 = fourList[2];
+    let four_3 = fourList[3];
+    let newCompare1 = compareSuits(four_0, four_1);
+    switch (newCompare1) {
+        case "player1":
+            newCompare1 = four_0;
+            break;
+        case "player2":
+            newCompare1 = four_1;
+    }
+    let newCompare2 = compareSuits(four_2, four_3);
+    switch (newCompare2) {
+        case "player1":
+            newCompare2 = four_2;
+            break;
+        case "player2":
+            newCompare2 = four_3;
+            break;
+    }
+    let compare = compareSuits(newCompare1, newCompare2);
+    switch (compare) {
+        case "player1":
+            compare = newCompare1;
+            break;
+        case "player2":
+            compare = newCompare2;
+            break;
+    }
+    return compare;
 }
 
-function fourTieBreaker() {
-
+function compareN(cardP1, cardP2) {
+    let suits1 = [];
+    let suits2 = [];
+    for (var i = 0; i < 5; i++) {
+        if (player1Hand[i].face == cardP1) {
+            suits1.push(player1Hand[i].suit);
+        }
+    }
+    for (var i = 0; i < 5; i++) {
+        if (player2Hand[i].face == cardP2) {
+            suits2.push(player2Hand[i].suit);
+        }
+    }
+    let compare1;
+    let compare2;
+    switch (suits1.length) {
+        case 2:
+            compare1 = getDouble(suits1);
+            compare2 = getDouble(suits2);
+            break;
+        case 3:
+            compare1 = getTriple(suits1);
+            compare2 = getTriple(suits2);
+            break;
+        case 4:
+            compare1 = getFour(suits1);
+            compare2 = getFour(suits2);
+            break;
+    }
+    let whoWon = compareSuits(compare1, compare2);
+    switch (whoWon) {
+        case "player1":
+            return "p1";
+        case "player2":
+            return "p2";
+    }
 }
 
 function compareSuits(card1Suit, card2Suit) {
