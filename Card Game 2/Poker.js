@@ -16,6 +16,8 @@ function nextRound() {
     deck = new Deck();
     player1Hand = [];
     player2Hand = [];
+    p1O = {};
+    p2O = {};
 
     for (var i = 0; i < 5; i++) {
         let card = deck.deck.pop()
@@ -57,36 +59,36 @@ function evaluateHands() {
         }
         p2O[player2Hand[i].face] = count;
     }
-
-    switch (Object.keys(p1O).length) {
-        case 2:
-            console.log("Player has a four of a kind or a fullhouse");
-            break;
-        case 3:
-            console.log("Player has a triple or a double pair");
-            break;
-        case 4:
-            console.log("Player has one pair");
-            break;
-        case 5:
-            console.log("Player has only singles or a straight");
-            break;
-    }
-    switch (Object.keys(p2O).length) {
-        case 2:
-            console.log("Michaels has a four of a kind or a fullhouse");
-            break;
-        case 3:
-            console.log("Michaels has a triple or a double pair");
-            break;
-        case 4:
-            console.log("Michaels has one pair");
-            break;
-        case 5:
-            console.log("Michaels has only singles or a straight");
-            break;
-    }
-
+    /*
+        switch (Object.keys(p1O).length) {
+            case 2:
+                console.log("Player has a four of a kind or a fullhouse");
+                break;
+            case 3:
+                console.log("Player has a triple or a double pair");
+                break;
+            case 4:
+                console.log("Player has one pair");
+                break;
+            case 5:
+                console.log("Player has only singles or a straight");
+                break;
+        }
+        switch (Object.keys(p2O).length) {
+            case 2:
+                console.log("Michaels has a four of a kind or a fullhouse");
+                break;
+            case 3:
+                console.log("Michaels has a triple or a double pair");
+                break;
+            case 4:
+                console.log("Michaels has one pair");
+                break;
+            case 5:
+                console.log("Michaels has only singles or a straight");
+                break;
+        }
+    */
     var p1HandLen = Object.keys(p1O).length;
     var p1HandType = myHandType(player1Hand, p1O);
 
@@ -99,8 +101,18 @@ function evaluateHands() {
     p1HandType = convertTypeToNum(p1HandType);
     p2HandType = convertTypeToNum(p2HandType);
 
-    var whoWon = comapareHandType(p1HandType, p2HandType);
+    console.log(p1HandType);
+    console.log(p2HandType);
 
+    var whoWon = comapareHandType(p1HandType, p2HandType);
+    switch (whoWon) {
+        case "p1":
+            playerWinUpdate();
+            break;
+        case "p2":
+            michaelsWinUpdate();
+            break;
+    }
     /*
     // These are good enough for non extra credit
     if (p2HandLen > p1HandLen) {
@@ -113,10 +125,10 @@ function evaluateHands() {
 }
 
 function comapareHandType(p1Hand, p2Hand) {
-    whoWon = ""
+    let whoWon = ""
     if (p1Hand == p2Hand) {
-        whoWon = "need to implement same hand type tie breaker"
-        console.log(whoWon);
+        // whoWon = "need to implement same hand type tie breaker"
+        // console.log(whoWon);
         let compare1 = -1;
         let compare2 = -1;
         switch (p1Hand) {
@@ -135,7 +147,6 @@ function comapareHandType(p1Hand, p2Hand) {
                 }
                 compare1 = Math.max(dPair1);
                 compare2 = Math.max(dPair2);
-                whoWon = compareN(compare1, compare2);
                 break;
             case 2: // single pair case
                 for (key in p1O) {
@@ -145,12 +156,10 @@ function comapareHandType(p1Hand, p2Hand) {
                 }
                 for (key in p2O) {
                     if (p2O[key] == 2) {
-                        compare1 = key;
+                        compare2 = key;
                     }
                 }
-                whoWon = compareN(compare1, compare2);
                 break;
-
             case 7: //  fullhouse case
             case 4: // triple case
                 for (key in p1O) {
@@ -163,7 +172,6 @@ function comapareHandType(p1Hand, p2Hand) {
                         compare2 = key;
                     }
                 }
-                whoWon = compareN(compare1, compare2);
                 break;
             case 8: // four of a kind case
                 for (key in p1O) {
@@ -176,7 +184,6 @@ function comapareHandType(p1Hand, p2Hand) {
                         compare2 = key;
                     }
                 }
-                whoWon = compareN(compare1, compare2);
                 break;
             case 10: // royal flush case
             case 9: // straight flush case
@@ -190,7 +197,17 @@ function comapareHandType(p1Hand, p2Hand) {
                     compare2 = key;
                 }
                 break;
-                whoWon = compareSingles(compare1, compare2);
+        }
+        compare1 = parseInt(compare1);
+        compare2 = parseInt(compare2);
+        if (compare1 > compare2) {
+            whoWon = "p1";
+        }
+        if (compare1 < compare2) {
+            whoWon = "p2";
+        }
+        if (compare1 == compare2) {
+            whoWon = compareN(compare1, compare2);
         }
     } else if (p1Hand > p2Hand) {
         whoWon = "p1"
@@ -198,10 +215,6 @@ function comapareHandType(p1Hand, p2Hand) {
         whoWon = "p2"
     }
     return whoWon
-}
-
-function getNthCase(n, dict) {
-    console.log("not yet implemented");
 }
 
 function myHandType(handList, handDict) {
@@ -244,7 +257,7 @@ function convertTypeToNum(handType) {
             return 4
         case "doublePair":
             return 3
-        case "pair":
+        case "singlePair":
             return 2
         case "singles":
             return 1
@@ -254,71 +267,19 @@ function convertTypeToNum(handType) {
 function michaelsWinUpdate() {
     document.getElementById('win').innerHTML = "Michaels has won this round!"
     p2Wins++;
-    console.log(p2Wins);
     document.getElementById('p2Wins').innerHTML = "Wins: " + p2Wins;
 }
 
 function playerWinUpdate() {
     document.getElementById('win').innerHTML = "Player has won this round!"
     p1Wins++;
-    console.log(p1Wins);
     document.getElementById('p1Wins').innerHTML = "Wins: " + p1Wins;
 }
 
-function compareSingles(cardP1, cardP2) {
-    if (cardP1 > cardP2) {
-        return "p1";
-    } else if (cardP1 == cardP2) {
-        let cardP1 = "";
-        for (var i = 0; i < 5; i++) {
-            if (player1Hand[i].face == cardP1) {
-                cardP1 = player1Hand[i].suit;
-            }
-        }
-
-        let cardP2 = "";
-        for (var i = 0; i < 5; i++) {
-            if (player2Hand[i].face == cardP2) {
-                cardP2 = player1Hand[i].suit;
-            }
-        }
-
-        let whoWon = compareSuits(cardP1, cardP2);
-        switch (whoWon) {
-            case "player1":
-                return "p1";
-            case "player2":
-                return "p2";
-        }
-    }
-    return "p2";
+function getSingle(singleList) {
+    return singleList[0];
 }
-//
-// function compareDoubles(cardP1, cardP2) {
-//     let pair1 = [];
-//     for (var i = 0; i < 5; i++) {
-//         if (player1Hand[i].face == cardP1) {
-//             pair1.push(player1Hand[i].suit);
-//         }
-//     }
-//
-//     let pair2 = [];
-//     for (var i = 0; i < 5; i++) {
-//         if (player2Hand[i].face == cardP2) {
-//             pair2.push(player2Hand[i].suit);
-//         }
-//     }
-//     compare1 = getDouble(pair1);
-//     compare2 = getDouble(pair2);
-//     let whoWon = compareSuits(compare1, compare2);
-//     switch (whoWon) {
-//         case "player1":
-//             return "p1"
-//         case "player2":
-//             return "p2"
-//     }
-// }
-//
+
 function getDouble(doubleList) {
     let pair_0 = doubleList[0];
     let pair_1 = doubleList[1]
@@ -331,33 +292,9 @@ function getDouble(doubleList) {
             compare1 = pair_1;
             break;
     }
-    return comapre1;
+    return compare1;
 }
-//
-// function compareTriples(cardP1, cardp2) {
-//     let triple1 = [];
-//     let triple2 = [];
-//     for (var i = 0; i < 5; i++) {
-//         if (player1Hand[i].face == cardP1) {
-//             triple1.push(player1Hand[i].suit);
-//         }
-//     }
-//     for (var i = 0; i < 5; i++) {
-//         if (player2Hand[i].face == cardP2) {
-//             triple2.push(player2Hand[i].suit);
-//         }
-//     }
-//     compare1 = getTriple(triple1);
-//     compare2 = getTriple(triple2);
-//     let whoWon = compareSuits(comapre1, compare2);
-//     switch (whoWon) {
-//         case "player1":
-//             return "p1"
-//         case "player 2":
-//             return "p2"
-//     }
-// }
-//
+
 function getTriple(tripleList) {
     let triple_0 = tripleList[0];
     let triple_1 = tripleList[1];
@@ -382,31 +319,7 @@ function getTriple(tripleList) {
     }
     return compare1;
 }
-//
-// function compareFour(cardP1, cardP2) {
-//     let four1 = [];
-//     let four2 = [];
-//     for (var i = 0; i < 5; i++) {
-//         if (player1Hand[i].face == cardP1) {
-//             four1.push(player1Hand[i].suit);
-//         }
-//     }
-//     for (var i = 0; i < 5; i++) {
-//         if (player2Hand[i].face == cardP2) {
-//             four2.push(player2Hand[i].suit);
-//         }
-//     }
-//     let compare1 = getFour(four1);
-//     let compare2 = getFour(four2);
-//     let whoWon = compareSuits(compare1, compare2);
-//     switch (whoWon) {
-//         case "player1":
-//             return "p1";
-//         case "player2":
-//             return "p2";
-//     }
-// }
-//
+
 function getFour(fourList) {
     let four_0 = fourList[0];
     let four_1 = fourList[1];
@@ -444,38 +357,48 @@ function getFour(fourList) {
 function compareN(cardP1, cardP2) {
     let suits1 = [];
     let suits2 = [];
-    for (var i = 0; i < 5; i++) {
-        if (player1Hand[i].face == cardP1) {
-            suits1.push(player1Hand[i].suit);
+    if (cardP1 > cardP2) {
+        return "p1";
+    } else if (cardP1 < cardP2) {
+        return "p2"
+    } else if (cardP1 == cardP2) {
+        for (var i = 0; i < 5; i++) {
+            if (player1Hand[i].face == cardP1) {
+                suits1.push(player1Hand[i].suit);
+            }
         }
-    }
-    for (var i = 0; i < 5; i++) {
-        if (player2Hand[i].face == cardP2) {
-            suits2.push(player2Hand[i].suit);
+        for (var i = 0; i < 5; i++) {
+            if (player2Hand[i].face == cardP2) {
+                suits2.push(player2Hand[i].suit);
+            }
         }
-    }
-    let compare1;
-    let compare2;
-    switch (suits1.length) {
-        case 2:
-            compare1 = getDouble(suits1);
-            compare2 = getDouble(suits2);
-            break;
-        case 3:
-            compare1 = getTriple(suits1);
-            compare2 = getTriple(suits2);
-            break;
-        case 4:
-            compare1 = getFour(suits1);
-            compare2 = getFour(suits2);
-            break;
-    }
-    let whoWon = compareSuits(compare1, compare2);
-    switch (whoWon) {
-        case "player1":
-            return "p1";
-        case "player2":
-            return "p2";
+        let compare1;
+        let compare2;
+        switch (suits1.length) {
+            case 1:
+                compare1 = getSingle(suits1);
+                compare2 = getSingle(suits2);
+                break;
+            case 2:
+                compare1 = getDouble(suits1);
+                compare2 = getDouble(suits2);
+                break;
+            case 3:
+                compare1 = getTriple(suits1);
+                compare2 = getTriple(suits2);
+                break;
+            case 4:
+                compare1 = getFour(suits1);
+                compare2 = getFour(suits2);
+                break;
+        }
+        let whoWon = compareSuits(compare1, compare2);
+        switch (whoWon) {
+            case "player1":
+                return "p1";
+            case "player2":
+                return "p2";
+        }
     }
 }
 
