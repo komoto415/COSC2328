@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<style>
+		body {
+			background-color: lightblue;
+		}
+	</style>
+	<script>
+		$(document).ready(function() {
+			$("#dbconnect").click(function() {
+				var u1 = $("#user").val();
+				var e1 = $("#email").val();
+				var p1 = $("#password").val();
+				var selValue = $('input[name=class]:checked').val();
+				if (selValue == undefined) {
+					selValue = "No Op";
+				}
+				alert("We will be submitting the values: " + u1 + ", " + p1 + ", " + e1 + ", and " + selValue);
+				$.post("register2.php", {
+						user: u1,
+						email: e1,
+						password: p1,
+						class: selValue
+					},
+					function(data) {
+						console.log(data);
+						console.log(this);
+						$("#dataspot").append(data + "<br><br>");
+					});
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<span>username: </span> <input type="text" id="user"><br>
+	<span>password: </span> <input type="password" id="password"><br>
+	<span>email: </span> <input type="text" id="email"><br>
+	<span>class: </span><br><input type="radio" id="class" name="class" value="Freshman">Freshman
+	<br><input type="radio" name="class" value="Sophomore">Sophomore
+	<br><input type="radio" name="class" value="Junior">Junior
+	<br><input type="radio" name="class" value="Senior">Senior
+	<br>
+	<button id="dbconnect">Submit your data!</button>
+	<div id="dataspot"></div>
+</body>
+
+</html>
