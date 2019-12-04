@@ -36,7 +36,7 @@ function updateHand(hand, p) {
             document.getElementById(imgSrc).src = player1Hand[i].icon;
         }
         if (p == 2) {
-            document.getElementById(imgSrc).src = player2Hand[i].icon
+            document.getElementById(imgSrc).src = player2Hand[i].icon;
         }
     }
 }
@@ -44,17 +44,6 @@ function updateHand(hand, p) {
 function revealHands() {
     updateHand(player1Hand, 1);
     updateHand(player1Hand, 2);
-    // for (var p = 1; p < 3; p++) {
-    //     for (var i = 0; i < 5; i++) {
-    //         let imgSrc = "p" + p + "Hand" + i;
-    //         if (p == 1) {
-    //             document.getElementById(imgSrc).src = player1Hand[i].icon;
-    //         }
-    //         if (p == 2) {
-    //             document.getElementById(imgSrc).src = player2Hand[i].icon
-    //         }
-    //     }
-    // }
     revealed = true;
 }
 
@@ -128,14 +117,6 @@ function evaluateHands() {
             michaelsWinUpdate();
             break;
     }
-    /*
-    // These are good enough for non extra credit
-    if (p2HandLen > p1HandLen) {
-        playerWinUpdate();
-    } else if (p2HandLen < p1HandLen) {
-        michaelsWinUpdate();
-    }
-    */
     document.getElementById('reveal').disabled = true;
 }
 
@@ -148,7 +129,6 @@ function potentialDiscard(me) {
             case "p1Hand3":
             case "p1Hand4":
                 cardToDiscard(me, p1Disc);
-                console.log(p1Disc);
                 break;
             case "p2Hand0":
             case "p2Hand1":
@@ -156,7 +136,6 @@ function potentialDiscard(me) {
             case "p2Hand3":
             case "p2Hand4":
                 cardToDiscard(me, p2Disc);
-                console.log(p1Disc);
                 break;
 
         }
@@ -179,19 +158,28 @@ function cardToDiscard(me, discList) {
 }
 
 function discard(me) {
+    let count = 0;
     switch (me.id) {
         case "discard1":
-            let count = moveDiscToDeck(player1Hand, p1Disc);
-            // console.log(count);
-            // console.log(player1Hand);
+            count = moveDiscToDeck(player1Hand, p1Disc);
             deck.shuffle();
             addNCardsToHand(player1Hand, count);
-            // console.log(player1Hand);
             break;
         case "discard2":
-
+            count = moveDiscToDeck(player2Hand, p2Disc);
+            deck.shuffle();
+            addNCardsToHand(player2Hand, count);
             break;
     }
+    updateHand(player1Hand, 1);
+    updateHand(player2Hand, 2);
+    document.getElementById('reveal').disabled = false;
+    document.getElementById('win').innerHTML = "";
+    p1O = {};
+    p2O = {};
+    p1Disc = [];
+    p2Disc = [];
+    evaluateHands();
 }
 
 function moveDiscToDeck(hand, disc) {
@@ -199,11 +187,9 @@ function moveDiscToDeck(hand, disc) {
     for (var i = 0; i < disc.length; i++) {
         for (var j = 0; j < hand.length; j++) {
             if (hand[j].icon == disc[i]) {
-                console.log(hand[j]);
                 let discarded = hand.splice(j, 1);
-                console.log(discarded);
                 deck.deck.push(discarded);
-                count++;
+                count++
             }
         }
     }
@@ -215,24 +201,6 @@ function addNCardsToHand(hand, n) {
         let card = deck.deck.pop();
         hand.push(card);
     }
-}
-
-function accessDisc(element, hand) {
-    let count = hand.forEach(item => accessHand(item, element))
-    return count;
-}
-
-function accessHand(item, element) {
-    // console.log(element);
-    // console.log(item);
-    let count = 0;
-    if (item.icon == element) {
-        console.log("Hurray!");
-        console.log(element);
-        console.log(item);
-        count++;
-    }
-    return count;
 }
 
 function comapareHandType(p1Hand, p2Hand) {
