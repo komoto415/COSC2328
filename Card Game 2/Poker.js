@@ -1,8 +1,4 @@
-var deck = new Deck();
-var player1Hand = [];
-var player2Hand = [];
-var p1O = {};
-var p2O = {};
+var deck, player1Hand, player2Hand, p1O, p2O, revealed, p1Disc, p2Disc;
 var p1Wins = 0;
 var p2Wins = 0;
 
@@ -18,6 +14,9 @@ function nextRound() {
     player2Hand = [];
     p1O = {};
     p2O = {};
+    p1Disc = [];
+    p2Disc = [];
+
 
     for (var i = 0; i < 5; i++) {
         let card = deck.deck.pop()
@@ -27,20 +26,36 @@ function nextRound() {
     }
     document.getElementById('win').innerHTML = '';
     document.getElementById('reveal').disabled = false;
+    revealed = false;
+}
+
+function updateHand(hand, p) {
+    for (var i = 0; i < 5; i++) {
+        let imgSrc = "p" + p + "Hand" + i;
+        if (p == 1) {
+            document.getElementById(imgSrc).src = player1Hand[i].icon;
+        }
+        if (p == 2) {
+            document.getElementById(imgSrc).src = player2Hand[i].icon
+        }
+    }
 }
 
 function revealHands() {
-    for (var p = 1; p < 3; p++) {
-        for (var i = 0; i < 5; i++) {
-            let imgSrc = "p" + p + "Hand" + i;
-            if (p == 1) {
-                document.getElementById(imgSrc).src = player1Hand[i].icon;
-            }
-            if (p == 2) {
-                document.getElementById(imgSrc).src = player2Hand[i].icon
-            }
-        }
-    }
+    updateHand(player1Hand, 1);
+    updateHand(player1Hand, 2);
+    // for (var p = 1; p < 3; p++) {
+    //     for (var i = 0; i < 5; i++) {
+    //         let imgSrc = "p" + p + "Hand" + i;
+    //         if (p == 1) {
+    //             document.getElementById(imgSrc).src = player1Hand[i].icon;
+    //         }
+    //         if (p == 2) {
+    //             document.getElementById(imgSrc).src = player2Hand[i].icon
+    //         }
+    //     }
+    // }
+    revealed = true;
 }
 
 function evaluateHands() {
@@ -124,13 +139,107 @@ function evaluateHands() {
     document.getElementById('reveal').disabled = true;
 }
 
+function potentialDiscard(me) {
+    if (revealed) {
+        switch (me.id) {
+            case "p1Hand0":
+            case "p1Hand1":
+            case "p1Hand2":
+            case "p1Hand3":
+            case "p1Hand4":
+                cardToDiscard(me, p1Disc);
+                console.log(p1Disc);
+                break;
+            case "p2Hand0":
+            case "p2Hand1":
+            case "p2Hand2":
+            case "p2Hand3":
+            case "p2Hand4":
+                cardToDiscard(me, p2Disc);
+                console.log(p1Disc);
+                break;
+
+        }
+    }
+}
+
+function cardToDiscard(me, discList) {
+    let str = me.src;
+    str = str.split('/');
+    str = str[str.length - 2] + "/" + str[str.length - 1];
+    let cardNum = parseInt(me.id[me.id.length - 1]) + 1
+    if (discList.includes(str)) {
+        discList.pop(str);
+        alert("You've opted not to dicard card number " + (cardNum))
+    } else {
+        discList.push(str);
+        alert("You've opted to potentially dicard card number " + (cardNum) + ". Please press the" +
+            " discard button when you're ready to discard")
+    }
+}
+
+function discard(me) {
+    switch (me.id) {
+        case "discard1":
+            let count = moveDiscToDeck(player1Hand, p1Disc);
+            // console.log(count);
+            // console.log(player1Hand);
+            deck.shuffle();
+            addNCardsToHand(player1Hand, count);
+            // console.log(player1Hand);
+            break;
+        case "discard2":
+
+            break;
+    }
+}
+
+function moveDiscToDeck(hand, disc) {
+    let count = 0;
+    for (var i = 0; i < disc.length; i++) {
+        for (var j = 0; j < hand.length; j++) {
+            if (hand[j].icon == disc[i]) {
+                console.log(hand[j]);
+                let discarded = hand.splice(j, 1);
+                console.log(discarded);
+                deck.deck.push(discarded);
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+function addNCardsToHand(hand, n) {
+    for (var i = 0; i < n; i++) {
+        let card = deck.deck.pop();
+        hand.push(card);
+    }
+}
+
+function accessDisc(element, hand) {
+    let count = hand.forEach(item => accessHand(item, element))
+    return count;
+}
+
+function accessHand(item, element) {
+    // console.log(element);
+    // console.log(item);
+    let count = 0;
+    if (item.icon == element) {
+        console.log("Hurray!");
+        console.log(element);
+        console.log(item);
+        count++;
+    }
+    return count;
+}
+
 function comapareHandType(p1Hand, p2Hand) {
-    let whoWon = ""
+    let whoWon = "";
     if (p1Hand == p2Hand) {
-        // whoWon = "need to implement same hand type tie breaker"
-        // console.log(whoWon);
-        let compare1 = -1;
-        let compare2 = -1;
+        let compare1;
+        let compare2;
         switch (p1Hand) {
             case 3: // double pair case
                 let dPair1 = [];
@@ -149,64 +258,78 @@ function comapareHandType(p1Hand, p2Hand) {
                 compare2 = Math.max(dPair2);
                 break;
             case 2: // single pair case
-                for (key in p1O) {
-                    if (p1O[key] == 2) {
-                        compare1 = key;
+                /*
+                    for (key in p1O) {
+                        if (p1O[key] == 2) {
+                            compare1 = key;
+                        }
                     }
-                }
-                for (key in p2O) {
-                    if (p2O[key] == 2) {
-                        compare2 = key;
+                    for (key in p2O) {
+                        if (p2O[key] == 2) {
+                            compare2 = key;
+                        }
                     }
-                }
+                    */
+                compare1 = getHandResolver(p1O, 2);
+                compare2 = getHandResolver(p2O, 2);
                 break;
             case 7: //  fullhouse case
             case 4: // triple case
-                for (key in p1O) {
-                    if (p1O[key] == 3) {
-                        compare1 = key;
+                /*
+                    for (key in p1O) {
+                        if (p1O[key] == 3) {
+                            compare1 = key;
+                        }
                     }
-                }
-                for (key in p2O) {
-                    if (p2O[key] == 3) {
-                        compare2 = key;
+                    for (key in p2O) {
+                        if (p2O[key] == 3) {
+                            compare2 = key;
+                        }
                     }
-                }
+                    */
+                compare1 = getHandResolver(p1O, 3);
+                compare2 = getHandResolver(p2O, 3);
                 break;
             case 8: // four of a kind case
-                for (key in p1O) {
-                    if (p1O[key] == 4) {
-                        compare1 = key;
+                /*
+                    for (key in p1O) {
+                        if (p1O[key] == 4) {
+                            compare1 = key;
+                        }
                     }
-                }
-                for (key in p2O) {
-                    if (p2O[key] == 4) {
-                        compare2 = key;
+                    for (key in p2O) {
+                        if (p2O[key] == 4) {
+                            compare2 = key;
+                        }
                     }
-                }
+                    */
+                compare1 = getHandResolver(p1O, 4);
+                compare2 = getHandResolver(p2O, 4);
                 break;
             case 10: // royal flush case
             case 9: // straight flush case
             case 6: // flush case
             case 5: // straight case
             case 1: // single case
-                for (key in p1O) {
-                    compare1 = key;
-                }
-                for (key in p2O) {
-                    compare2 = key;
-                }
+                /*
+                    for (key in p1O) {
+                        compare1 = key;
+                    }
+                    for (key in p2O) {
+                        compare2 = key;
+                    }
+                    */
+                compare1 = getHandResolver(p1O, 1);
+                compare2 = getHandResolver(p2O, 1);
                 break;
         }
         compare1 = parseInt(compare1);
         compare2 = parseInt(compare2);
         if (compare1 > compare2) {
             whoWon = "p1";
-        }
-        if (compare1 < compare2) {
+        } else if (compare1 < compare2) {
             whoWon = "p2";
-        }
-        if (compare1 == compare2) {
+        } else if (compare1 == compare2) {
             whoWon = compareN(compare1, compare2);
         }
     } else if (p1Hand > p2Hand) {
@@ -215,6 +338,16 @@ function comapareHandType(p1Hand, p2Hand) {
         whoWon = "p2"
     }
     return whoWon
+}
+
+function getHandResolver(handDict, type) {
+    let ret;
+    for (key in handDict) {
+        if (handDict[key] == type) {
+            ret = key;
+        }
+    }
+    return ret;
 }
 
 function myHandType(handList, handDict) {
