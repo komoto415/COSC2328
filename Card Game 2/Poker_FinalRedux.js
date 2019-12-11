@@ -18,7 +18,6 @@ function makeCard(item) {
     return new Card(item.suit, item.face, item.icon);
 }
 
-
 function nextRound() {
     for (var p = 1; p < 3; p++) {
         for (var i = 0; i < 5; i++) {
@@ -31,7 +30,6 @@ function nextRound() {
     p2O = {};
     p1Disc = [];
     p2Disc = [];
-
 
     for (var i = 0; i < 5; i++) {
         let card = deck.deck.pop()
