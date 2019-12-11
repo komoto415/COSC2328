@@ -8,8 +8,16 @@ $(document).ready(function() {
         console.log("imported!");
         player1Hand = data.p1;
         player2Hand = data.p2;
+
+        player1Hand = player1Hand.map(makeCard);
+        player2Hand = player2Hand.map(makeCard);
     })
 });
+
+function makeCard(item) {
+    return new Card(item.suit, item.face, item.icon);
+}
+
 
 function nextRound() {
     for (var p = 1; p < 3; p++) {

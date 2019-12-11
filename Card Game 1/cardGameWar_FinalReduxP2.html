@@ -84,11 +84,21 @@
         $(document).ready(function() {
             $.getJSON('player1.json', function(data)) {
                 pl1Deck = data;
-            }
+                pl1Deck = pl1Deck.map(makeCard)
+
+            })
+        });
+
+        $(document).ready(function() {
             $.getJSON('player2.json', function(data)) {
                 pl2Deck = data;
-            }
+                pl2Deck = pl2Deck.map(makeCard)
+            })
         });
+
+        function makeCard(item) {
+            return new Card(item.suit, item.face, item.icon);
+        }
 
         if (pl1Deck.length == 0 && pl1Disc.length == 0) {
             alert("Michaels has won! You have been banished to the Shadow Realm")

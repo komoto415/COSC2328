@@ -95,8 +95,10 @@
         }
 
         var json = JSON.stringify(obj);
-        console.log(json);
-
+        // console.log(json);
+        for (x in obj) {
+            console.log(obj[x]);
+        }
 
         if (pl1Deck.length == 0 && pl1Disc.length == 0) {
             alert("Michaels has won! You have been banished to the Shadow Realm")
