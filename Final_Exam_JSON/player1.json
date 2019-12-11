@@ -1,0 +1,22 @@
+[
+    {"suit":"Hearts","face":11,"icon":"Deck/11H.jpg"},
+    {"suit":"Diamonds","face":2,"icon":"Deck/2D.jpg"},
+    {"suit":"Spades","face":9,"icon":"Deck/9S.jpg"},
+    {"suit":"Clubs","face":6,"icon":"Deck/6C.jpg"},
+    {"suit":"Diamonds","face":6,"icon":"Deck/6D.jpg"},
+    {"suit":"Diamonds","face":14,"icon":"Deck/14D.jpg"},
+    {"suit":"Hearts","face":5,"icon":"Deck/5H.jpg"},
+    {"suit":"Diamonds","face":12,"icon":"Deck/12D.jpg"},
+    {"suit":"Spades","face":8,"icon":"Deck/8S.jpg"},
+    {"suit":"Diamonds","face":9,"icon":"Deck/9D.jpg"},
+    {"suit":"Hearts","face":8,"icon":"Deck/8H.jpg"},
+    {"suit":"Hearts","face":7,"icon":"Deck/7H.jpg"},
+    {"suit":"Diamonds","face":11,"icon":"Deck/11D.jpg"},
+    {"suit":"Spades","face":6,"icon":"Deck/6S.jpg"},
+    {"suit":"Hearts","face":3,"icon":"Deck/3H.jpg"},
+    {"suit":"Clubs","face":9,"icon":"Deck/9C.jpg"},
+    {"suit":"Diamonds","face":3,"icon":"Deck/3D.jpg"},
+    {"suit":"Spades","face":12,"icon":"Deck/12S.jpg"},
+    {"suit":"Hearts","face":14,"icon":"Deck/14H.jpg"},
+    {"suit":"Diamonds","face":7,"icon":"Deck/7D.jpg"}
+]

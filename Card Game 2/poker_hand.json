@@ -1,0 +1,17 @@
+{"p1" :
+  [
+    {"suit": "Diamonds", "face": 7,   "icon": "Deck/7D.jpg"},
+    {"suit": "Clubs", "face": 13, "icon": "Deck/13C.jpg"},
+    {"suit": "Spades", "face": 13, "icon": "Deck/13S.jpg"},
+    {"suit": "Spades", "face": 3, "icon": "Deck/3S.jpg"},
+    {"suit": "Clubs", "face": 12, "icon": "Deck/12C.jpg"}
+  ],
+  "p2":
+  [
+    {"suit": "Clubs", "face": 10, "icon": "Deck/10C.jpg"},
+    {"suit": "Diamonds", "face": 9, "icon": "Deck/9D.jpg"},
+    {"suit": "Diamonds", "face": 6, "icon": "Deck/6D.jpg"},
+    {"suit": "Spades", "face": 9, "icon": "Deck/9S.jpg"},
+    {"suit": "Diamonds", "face": 3, "icon": "Deck/3D.jpg"}
+  ]
+}

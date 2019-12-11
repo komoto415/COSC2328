@@ -1,0 +1,283 @@
+<html lang="en" dir="ltr">
+
+<head>
+    <title>War!</title>
+    <link rel="stylesheet" href="./cardGameWar.css">
+    <style>
+        body {
+            background-color: lightsteelblue;
+        }
+    </style>
+</head>
+<script src="Card_Example/card.js"></script>
+<header style="font-size: 250%; text-align: center">
+    Card Game: War!
+</header>
+
+<body>
+    <div class="buttonRows">
+        <button onclick="newGame()" type="button" class="buttons" id="newGame">New Game</button>
+        <button onclick="nextRound()" type="button" class="buttons" id="nextRound">Next Round</button>
+        <br>
+        <button onclick="discToDeck(this)" type="button" class="buttons" id="discToDeck" disabled=true>Shuffle Discard Pile Into Deck</button>
+    </div>
+    <div class="row">
+        <div class="column side">
+            <h2 class="p1Dec">Student</h2>
+            <h3 id="p1HandHead">Hand (26)</h3>
+            <div class="hand">
+                <img onmouseover="getHandCount(this)" class="cards" id="p1Hand" src="./Card_Example/Deck/Purple_back.jpg"></img>
+                <!-- <div class="inside">
+                    <div class="text">John Doe</div>
+                </div> -->
+            </div>
+            <h3 id="p1DiscHead">Discard (0)</h3>
+            <div class="discard">
+                <img onmouseover="getDiscCount(this)" class="cards" id="p1Disc" src='./Card_Example/Deck/Yellow_back.jpg'></img>
+            </div>
+        </div>
+
+
+        <div class="column middle">
+            <h2> Playing Field</h2>
+            <h3 id="rounds"> Rounds Played: 0 </h3>
+            <div class="column middle L">
+                <img class="cards" id="p1Play" src='./Card_Example/Deck/Red_back.jpg'></img>
+            </div>
+            <div class="column middle R">
+                <img class="cards" id="p2Play" src='./Card_Example/Deck/Red_back.jpg'></img>
+            </div>
+            <div class="column middle M">
+                <h1 id="win"></h1>
+            </div>
+        </div>
+
+
+        <div class="column side">
+            <h2 class="p2Dec">Michaels</h2>
+            <h3 id="p2HandHead">Hand (26)</h3>
+            <div class="hand">
+                <img onmouseover="getHandCount(this)" class="cards" id="p2Hand" src="./Card_Example/Deck/Purple_back.jpg"></img>
+                <!-- <div class="inside">
+                    <div class="text">John Doe</div>
+                </div> -->
+            </div>
+            <h3 id="p2DiscHead">Discard (0)</h3>
+            <div class="discard">
+                <img onmouseover="getDiscCount(this)" class="cards" id="p2Disc" src='./Card_Example/Deck/Yellow_back.jpg'></img>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var rounds = 0;
+        var state = 0;
+        var pl1Deck = [];
+        var pl2Deck = [];
+        var pl1Disc = [];
+        var pl2Disc = [];
+        var playField = [];
+        var lastWon;
+        var tmp = new Deck();
+
+
+        for (var i = 0; i < 26; i++) {
+            pl1Deck[i] = tmp.deck[i];
+        }
+        for (var i = 0; i < 26; i++) {
+            pl2Deck[i] = tmp.deck[i + 26];
+        }
+
+        // TODO You care about this
+        obj = {
+            p1: pl1Deck,
+            p2: pl2Deck,
+        }
+
+        var json = JSON.stringify(obj);
+        console.log(json);
+
+
+        if (pl1Deck.length == 0 && pl1Disc.length == 0) {
+            alert("Michaels has won! You have been banished to the Shadow Realm")
+        } else if (pl2Deck.length == 0 && pl2Disc.length == 0) {
+            alert("Victory! Michaels has been banished to the Shadow Realm")
+        }
+
+        function newGame(self) {
+            if (pl1Deck.length + pl1Disc.length > pl2Deck.length + pl2Disc.length) {
+                alert("Michaels has won! You have been banished to the Shadow Relm")
+            } else {
+                alert("Victory! Michaels has been banished to the Shadow Relm")
+            }
+            pl1Deck = [];
+            pl2Deck = [];
+            pl1Disc = [];
+            pl2Disc = [];
+            playField = [];
+
+            tmp = new Deck()
+            for (var i = 0; i < 26; i++) {
+                pl1Deck[i] = tmp.deck[i];
+            }
+            for (var i = 0; i < 26; i++) {
+                pl2Deck[i] = tmp.deck[i + 26];
+            }
+
+            rounds = 0;
+            document.getElementById('rounds').innerHTML = "Rounds Played: " + rounds;
+            document.getElementById('p1Play').src = './Card_Example/Deck/Red_back.jpg';
+            document.getElementById('p2Play').src = './Card_Example/Deck/Red_back.jpg';
+            document.getElementById('p1Disc').src = './Card_Example/Deck/Yellow_back.jpg';
+            document.getElementById('p2Disc').src = './Card_Example/Deck/Yellow_back.jpg';
+            document.getElementById('p1DiscHead').innerHTML = "Discard Pile (" + pl1Disc.length + ")";
+            document.getElementById('p2DiscHead').innerHTML = "Discard Pile (" + pl2Disc.length + ")";
+            document.getElementById('p1HandHead').innerHTML = "Hand (" + pl1Deck.length + ")";
+            document.getElementById('p2HandHead').innerHTML = "Hand (" + pl2Deck.length + ")";
+            document.getElementById('win').innerHTML = "Decks have been reset";
+            document.getElementById('discToDeck').style.opacity = "0";
+            document.getElementById('nextRound').disabled = false;
+            self.disabled = true;
+
+        }
+
+        function getHandCount(x) {
+            if (x.id == "p1Hand") {
+                console.log(pl1Deck.length);
+            } else {
+                console.log(pl2Deck.length);
+            }
+        }
+
+        function getDiscCount(x) {
+            if (x.id == "p1Disc") {
+                console.log(pl1Disc.length);
+            } else {
+                console.log(pl2Disc.length);
+            }
+        }
+
+        function nextRound() {
+            // console.log(pl1Deck.length);
+            // console.log(pl2Deck.length);
+            var pCardPlayed = get_top_card(pl1Deck);
+            var mCardPlayed = get_top_card(pl2Deck);
+            var won = whoWon(pCardPlayed, mCardPlayed);
+            if (lastWon == "player1") {
+                if (playField != 0) {
+                    document.getElementById('p1Disc').src = playField[0].icon;
+                }
+            } else if (lastWon == "player2") {
+                document.getElementById('p2Disc').src = playField[1].icon;
+            }
+            lastWon = won;
+            var winDiv = document.getElementById('win');
+            document.getElementById('p1Play').src = pCardPlayed.icon;
+            document.getElementById('p2Play').src = mCardPlayed.icon;
+            document.getElementById('p1DiscHead').innerHTML = "Discard Pile (" + pl1Disc.length + ")";
+            document.getElementById('p2DiscHead').innerHTML = "Discard Pile (" + pl2Disc.length + ")";
+            if (won == "player1") {
+                winDiv.innerHTML = "^== Player wins this round!";
+                pl1Disc.push(pCardPlayed, mCardPlayed);
+            } else if (won == "player2") {
+                winDiv.innerHTML = "Michaels wins this round! ==^";
+                pl2Disc.push(pCardPlayed, mCardPlayed);
+            }
+            playField = [];
+            playField.push(pCardPlayed, mCardPlayed);
+            if (pl1Deck.length == 0 || pl2Deck.length == 0) {
+                document.getElementById('discToDeck').style.opacity = "1";
+                document.getElementById('nextRound').disabled = true;
+                document.getElementById('discToDeck').disabled = false;
+                if (pl1Deck.length == 0) {
+                    alert("Player 1 has ran out of cards in their hand. Shuffling discard pile into hand")
+                }
+                if (pl2Deck.length == 0) {
+                    alert("Player 2 has ran out of cards in their hand. Shuffling discard pile into hand")
+                }
+            }
+            rounds++;
+            document.getElementById('rounds').innerHTML = "Rounds Played: " + rounds;
+            document.getElementById('p1HandHead').innerHTML = "Hand (" + pl1Deck.length + ")";
+            document.getElementById('p2HandHead').innerHTML = "Hand (" + pl2Deck.length + ")";
+
+            // console.log(pl1Deck.length);
+            // console.log(pl2Deck.length);
+            // console.log(pCardPlayed);
+            // console.log(mCardPlayed);
+            // console.log(pl1Deck);
+            // console.log(pl1Disc);
+            // console.log(pl2Disc);
+        }
+
+        function discToDeck() {
+            var won = whoWon(playField[0], playField[1]);
+            var winDiv = document.getElementById('win');
+            if (pl1Deck.length == 0 && pl2Deck.length == 0) {
+                winDiv.innerHTML = "Both players shuffled their discard pile into their hand";
+            } else if (pl1Deck.length == 0) {
+                winDiv.innerHTML = "Player 1 shuffled their discard pile into their hand";
+            } else if (pl2Deck.length == 0) {
+                winDiv.innerHTML = "Michaels shuffled their discard pile into their hand";
+            }
+            if (pl1Deck.length == 0 && pl2Deck.length == 0) {
+                document.getElementById('p1Play').src = './Card_Example/Deck/Red_back.jpg';
+                document.getElementById('p1Disc').src = './Card_Example/Deck/Yellow_back.jpg';
+                pl1Deck.push.apply(pl1Deck, pl1Disc);
+                pl1Disc = [];
+                // document.getElementById('p1DiscHead').innerHTML = "Discard Pile (" + pl1Disc.length + ")";
+                shuffle(pl1Deck);
+
+
+                document.getElementById('p2Play').src = './Card_Example/Deck/Red_back.jpg';
+                document.getElementById('p2Disc').src = './Card_Example/Deck/Yellow_back.jpg';
+                pl2Deck.push.apply(pl2Deck, pl2Disc);
+                pl2Disc = [];
+                // document.getElementById('p2DiscHead').innerHTML = "Discard Pile (" + pl2Disc.length + ")";
+                shuffle(pl2Deck);
+            } else if (pl1Deck.length == 0 && pl2Deck.length != 0) {
+                document.getElementById('p1Disc').src = './Card_Example/Deck/Yellow_back.jpg';
+                pl1Deck.push.apply(pl1Deck, pl1Disc);
+                pl1Disc = [];
+                shuffle(pl1Deck);
+            } else if (pl1Deck.length != 0 && pl2Deck.length == 0) {
+                document.getElementById('p2Disc').src = './Card_Example/Deck/Yellow_back.jpg';
+                pl1Deck.push.apply(pl2Deck, pl2Disc);
+                pl2Disc = [];
+                shuffle(pl2Deck);
+            }
+            document.getElementById('p1DiscHead').innerHTML = "Discard Pile (" + pl1Disc.length + ")";
+            document.getElementById('p2DiscHead').innerHTML = "Discard Pile (" + pl2Disc.length + ")";
+            document.getElementById('p1HandHead').innerHTML = "Hand (" + pl1Deck.length + ")";
+            document.getElementById('p2HandHead').innerHTML = "Hand (" + pl2Deck.length + ")";
+            document.getElementById('discToDeck').style.opacity = "0";
+            document.getElementById('nextRound').disabled = false;
+
+        }
+
+        function whoWon(pCardPlayed, mCardPlayed) {
+            if (pCardPlayed.face > mCardPlayed.face) {
+                return "player1";
+            } else if (pCardPlayed.face == mCardPlayed.face) {
+                if (compareSuits(pCardPlayed.suit, mCardPlayed.suit) == "player1") {
+                    return "player1";
+                }
+            }
+            return "player2";
+        }
+
+        function compareSuits(card1Suit, card2Suit) {
+            if (card1Suit == "Spades") {
+                return "player1";
+            } else if (card1Suit == "Daimonds" && card2Suit != "Spades") {
+                return "player1";
+            } else if (card1Suit == "Clubs" && card2Suit == "Hearts") {
+                return "player1";
+            } else {
+                return "player2";
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <link rel="stylesheet" href="./Poker.css">
+    <meta charset="utf-8">
+    <title>Poker!</title>
+    <style>
+        body {
+            background-color: lightsteelblue;
+        }
+    </style>
+</head>
+<script src="./card.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<header style="font-size: 250%; text-align: center">
+    Card Game: Poker!
+</header>
+
+<body onload="nextRound()">
+    <div class="row">
+        <div class="column right">
+
+
+            <div class="divs top">
+                <div class="column left">
+                    <h1 class="p1Dec">Student</h1>
+                    <h2 id="p1Wins">Wins: 0</h2>
+                    <button onclick="discard(this)" type="button" class="buttons" id="discard1">Discard</button>
+                </div>
+                <div class="column right">
+                    <div class="hand">
+                        <img class="cards cardsP1" id="p1Hand0" onclick="potentialDiscard(this)"></img>
+                        <img class="cards cardsP1" id="p1Hand1" onclick="potentialDiscard(this)"></img>
+                        <img class="cards cardsP1" id="p1Hand2" onclick="potentialDiscard(this)"></img>
+                        <img class="cards cardsP1" id="p1Hand3" onclick="potentialDiscard(this)"></img>
+                        <img class="cards cardsP1" id="p1Hand4" onclick="potentialDiscard(this)"></img>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="divs middle">
+                <div class="column left mid">
+                    <div class="c left">
+                        <button onclick="nextRound()" type="button" class="buttons">Next Round</button>
+                        <button onclick="revealHands();evaluateHands();" type="button" class="buttons" id="reveal">Reveal Hands!</button>
+                    </div>
+                    <div class="c right">
+                        <h2 id="win"> </h2>
+                    </div>
+                </div>
+                <div class="column right">
+                    <img class="cards midCard" id="deck" src='./Deck/Purple_back.jpg'></img><br>
+                </div>
+            </div>
+
+
+            <div class="divs bottom">
+                <div class="column left">
+                    <h1 class="p2Dec">Michaels</h1>
+                    <h2 id="p2Wins">Wins: 0</h2>
+                    <button onclick="discard(this)" type="button" class="buttons" id="discard2">Discard</button>
+                </div>
+                <div class="column right">
+                    <div class="hand">
+                        <img class="cards cardsP2" id="p2Hand0" onclick="potentialDiscard(this)"></img>
+                        <img class="cards cardsP2" id="p2Hand1" onclick="potentialDiscard(this)"></img>
+                        <img class="cards cardsP2" id="p2Hand2" onclick="potentialDiscard(this)"></img>
+                        <img class="cards cardsP2" id="p2Hand3" onclick="potentialDiscard(this)"></img>
+                        <img class="cards cardsP2" id="p2Hand4" onclick="potentialDiscard(this)"></img>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script src="Poker_JSON_ver.js"></script>
+</body>
+
+</html>
