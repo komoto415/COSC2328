@@ -9,7 +9,7 @@
         }
     </style>
 </head>
-<script src="Card_Example/card.js"></script>
+<script src="card.js"></script>
 <header style="font-size: 250%; text-align: center">
     Card Game: War!
 </header>
@@ -26,14 +26,14 @@
             <h2 class="p1Dec">Student</h2>
             <h3 id="p1HandHead">Hand (26)</h3>
             <div class="hand">
-                <img onmouseover="getHandCount(this)" class="cards" id="p1Hand" src="./Card_Example/Deck/Purple_back.jpg"></img>
+                <img onmouseover="getHandCount(this)" class="cards" id="p1Hand" src="./Deck/Purple_back.jpg"></img>
                 <!-- <div class="inside">
                     <div class="text">John Doe</div>
                 </div> -->
             </div>
             <h3 id="p1DiscHead">Discard (0)</h3>
             <div class="discard">
-                <img onmouseover="getDiscCount(this)" class="cards" id="p1Disc" src='./Card_Example/Deck/Yellow_back.jpg'></img>
+                <img onmouseover="getDiscCount(this)" class="cards" id="p1Disc" src='./Deck/Yellow_back.jpg'></img>
             </div>
         </div>
 
@@ -42,10 +42,10 @@
             <h2> Playing Field</h2>
             <h3 id="rounds"> Rounds Played: 0 </h3>
             <div class="column middle L">
-                <img class="cards" id="p1Play" src='./Card_Example/Deck/Red_back.jpg'></img>
+                <img class="cards" id="p1Play" src='./Deck/Red_back.jpg'></img>
             </div>
             <div class="column middle R">
-                <img class="cards" id="p2Play" src='./Card_Example/Deck/Red_back.jpg'></img>
+                <img class="cards" id="p2Play" src='./Deck/Red_back.jpg'></img>
             </div>
             <div class="column middle M">
                 <h1 id="win"></h1>
@@ -57,14 +57,14 @@
             <h2 class="p2Dec">Michaels</h2>
             <h3 id="p2HandHead">Hand (26)</h3>
             <div class="hand">
-                <img onmouseover="getHandCount(this)" class="cards" id="p2Hand" src="./Card_Example/Deck/Purple_back.jpg"></img>
+                <img onmouseover="getHandCount(this)" class="cards" id="p2Hand" src="./Deck/Purple_back.jpg"></img>
                 <!-- <div class="inside">
                     <div class="text">John Doe</div>
                 </div> -->
             </div>
             <h3 id="p2DiscHead">Discard (0)</h3>
             <div class="discard">
-                <img onmouseover="getDiscCount(this)" class="cards" id="p2Disc" src='./Card_Example/Deck/Yellow_back.jpg'></img>
+                <img onmouseover="getDiscCount(this)" class="cards" id="p2Disc" src='./Deck/Yellow_back.jpg'></img>
             </div>
         </div>
     </div>
@@ -78,14 +78,52 @@
         var pl2Disc = [];
         var playField = [];
         var lastWon;
+        var gameHistory = {
+            history: []
+        }
         var tmp = new Deck();
 
+        // // TODO Problem 2
+        // $(document).ready(function() {
+        //     $.getJSON('player1.json', function(data)) {
+        //         pl1Deck = data;
+        //         pl1Deck = pl1Deck.map(makeCard)
+        //
+        //     })
+        // });
+        // $(document).ready(function() {
+        //     $.getJSON('player2.json', function(data)) {
+        //         pl2Deck = data;
+        //         pl2Deck = pl2Deck.map(makeCard)
+        //     })
+        // });
+
+        function makeCard(item) {
+            return new Card(item.suit, item.face, item.icon);
+        }
+
+        // Comment this out to test json hand write
         for (var i = 0; i < 26; i++) {
             pl1Deck[i] = tmp.deck[i];
         }
         for (var i = 0; i < 26; i++) {
             pl2Deck[i] = tmp.deck[i + 26];
         }
+
+        obj = {
+            p1: pl1Deck,
+            p2: pl2Deck,
+        }
+        // TODO Problem 3 loged our as json object
+        var json = JSON.stringify(obj);
+        for (x in obj) {
+            console.log(obj[x]);
+        }
+
+        // log out to test player hand content
+        // console.log(pl1Deck);
+        // console.log(pl2Deck);
+
 
         if (pl1Deck.length == 0 && pl1Disc.length == 0) {
             alert("Michaels has won! You have been banished to the Shadow Realm")
@@ -115,10 +153,10 @@
 
             rounds = 0;
             document.getElementById('rounds').innerHTML = "Rounds Played: " + rounds;
-            document.getElementById('p1Play').src = './Card_Example/Deck/Red_back.jpg';
-            document.getElementById('p2Play').src = './Card_Example/Deck/Red_back.jpg';
-            document.getElementById('p1Disc').src = './Card_Example/Deck/Yellow_back.jpg';
-            document.getElementById('p2Disc').src = './Card_Example/Deck/Yellow_back.jpg';
+            document.getElementById('p1Play').src = './Deck/Red_back.jpg';
+            document.getElementById('p2Play').src = './Deck/Red_back.jpg';
+            document.getElementById('p1Disc').src = './Deck/Yellow_back.jpg';
+            document.getElementById('p2Disc').src = './Deck/Yellow_back.jpg';
             document.getElementById('p1DiscHead').innerHTML = "Discard Pile (" + pl1Disc.length + ")";
             document.getElementById('p2DiscHead').innerHTML = "Discard Pile (" + pl2Disc.length + ")";
             document.getElementById('p1HandHead').innerHTML = "Hand (" + pl1Deck.length + ")";
@@ -147,8 +185,6 @@
         }
 
         function nextRound() {
-            // console.log(pl1Deck.length);
-            // console.log(pl2Deck.length);
             var pCardPlayed = get_top_card(pl1Deck);
             var mCardPlayed = get_top_card(pl2Deck);
             var won = whoWon(pCardPlayed, mCardPlayed);
@@ -162,16 +198,30 @@
             lastWon = won;
             var winDiv = document.getElementById('win');
             document.getElementById('p1Play').src = pCardPlayed.icon;
+            console.log(pCardPlayed.icon);
             document.getElementById('p2Play').src = mCardPlayed.icon;
             document.getElementById('p1DiscHead').innerHTML = "Discard Pile (" + pl1Disc.length + ")";
             document.getElementById('p2DiscHead').innerHTML = "Discard Pile (" + pl2Disc.length + ")";
+
+            // TODO Problem 5, contain game history in json object. json object declared
+            // at beginning of script block
             if (won == "player1") {
                 winDiv.innerHTML = "^== Player wins this round!";
                 pl1Disc.push(pCardPlayed, mCardPlayed);
+                gameHistory.history.push({
+                    player: [pCardPlayed, mCardPlayed]
+                })
             } else if (won == "player2") {
                 winDiv.innerHTML = "Michaels wins this round! ==^";
                 pl2Disc.push(pCardPlayed, mCardPlayed);
+                gameHistory.history.push({
+                    michaels: [pCardPlayed, mCardPlayed]
+                })
             }
+            // Problem 5 log out to see history
+            var history = JSON.stringify(gameHistory);
+            console.log(history);
+
             playField = [];
             playField.push(pCardPlayed, mCardPlayed);
             if (pl1Deck.length == 0 || pl2Deck.length == 0) {
@@ -189,14 +239,6 @@
             document.getElementById('rounds').innerHTML = "Rounds Played: " + rounds;
             document.getElementById('p1HandHead').innerHTML = "Hand (" + pl1Deck.length + ")";
             document.getElementById('p2HandHead').innerHTML = "Hand (" + pl2Deck.length + ")";
-
-            // console.log(pl1Deck.length);
-            // console.log(pl2Deck.length);
-            // console.log(pCardPlayed);
-            // console.log(mCardPlayed);
-            // console.log(pl1Deck);
-            // console.log(pl1Disc);
-            // console.log(pl2Disc);
         }
 
         function discToDeck() {
@@ -210,27 +252,27 @@
                 winDiv.innerHTML = "Michaels shuffled their discard pile into their hand";
             }
             if (pl1Deck.length == 0 && pl2Deck.length == 0) {
-                document.getElementById('p1Play').src = './Card_Example/Deck/Red_back.jpg';
-                document.getElementById('p1Disc').src = './Card_Example/Deck/Yellow_back.jpg';
+                document.getElementById('p1Play').src = './Deck/Red_back.jpg';
+                document.getElementById('p1Disc').src = './Deck/Yellow_back.jpg';
                 pl1Deck.push.apply(pl1Deck, pl1Disc);
                 pl1Disc = [];
                 // document.getElementById('p1DiscHead').innerHTML = "Discard Pile (" + pl1Disc.length + ")";
                 shuffle(pl1Deck);
 
 
-                document.getElementById('p2Play').src = './Card_Example/Deck/Red_back.jpg';
-                document.getElementById('p2Disc').src = './Card_Example/Deck/Yellow_back.jpg';
+                document.getElementById('p2Play').src = './Deck/Red_back.jpg';
+                document.getElementById('p2Disc').src = './Deck/Yellow_back.jpg';
                 pl2Deck.push.apply(pl2Deck, pl2Disc);
                 pl2Disc = [];
                 // document.getElementById('p2DiscHead').innerHTML = "Discard Pile (" + pl2Disc.length + ")";
                 shuffle(pl2Deck);
             } else if (pl1Deck.length == 0 && pl2Deck.length != 0) {
-                document.getElementById('p1Disc').src = './Card_Example/Deck/Yellow_back.jpg';
+                document.getElementById('p1Disc').src = './Deck/Yellow_back.jpg';
                 pl1Deck.push.apply(pl1Deck, pl1Disc);
                 pl1Disc = [];
                 shuffle(pl1Deck);
             } else if (pl1Deck.length != 0 && pl2Deck.length == 0) {
-                document.getElementById('p2Disc').src = './Card_Example/Deck/Yellow_back.jpg';
+                document.getElementById('p2Disc').src = './Deck/Yellow_back.jpg';
                 pl1Deck.push.apply(pl2Deck, pl2Disc);
                 pl2Disc = [];
                 shuffle(pl2Deck);
